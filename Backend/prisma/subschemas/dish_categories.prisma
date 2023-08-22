@@ -1,0 +1,4 @@
+model Dish_Categories {
+    id_dish_category Int @id @default(autoincrement())
+    name String @unique
+}

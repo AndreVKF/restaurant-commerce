@@ -1,0 +1,4 @@
+model Purchase_Status {
+    id_purchase_status Int @id @default(autoincrement())
+    status String @unique
+}

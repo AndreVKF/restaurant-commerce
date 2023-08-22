@@ -1,0 +1,4 @@
+model User_Types {
+    id_user_type Int @id @default(autoincrement())
+    type String @unique 
+}

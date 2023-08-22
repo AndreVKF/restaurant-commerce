@@ -1,0 +1,4 @@
+model Ingredients {
+    id_ingredient Int @id @default(autoincrement())
+    name String
+}

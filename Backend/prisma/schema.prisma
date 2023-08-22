@@ -1,0 +1,124 @@
+//🧩Don't Edit this file.✨Generated in Tue Aug 22 2023 17:49:44 GMT-0300 (Brasilia Standard Time)✨
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Dish_Categories {
+  id_dish_category Int      @id @default(autoincrement())
+  name             String   @unique
+  Dishes           Dishes[]
+}
+
+model Dishes {
+  id_dish          Int      @id @default(autoincrement())
+  id_dish_category Int
+  name             String   @unique
+  description      String
+  image_url        String?
+  price            Int
+  created_at       DateTime @default(now())
+  updated_at       DateTime @default(now()) @updatedAt
+
+  // relations
+  dish_category  Dish_Categories  @relation(fields: [id_dish_category], references: [id_dish_category])
+  Purchase_Items Purchase_Items[]
+  Receipes       Receipes[]
+
+  // constrains
+  @@unique([id_dish, id_dish_category])
+}
+
+model Ingredients {
+  id_ingredient Int        @id @default(autoincrement())
+  name          String
+  Receipes      Receipes[]
+}
+
+model Purchase_Items {
+  id_purchase_item String @id @default(uuid())
+  id_purchase      Int
+  id_dish          Int
+  quantity         Int
+
+  // relations
+  purchase Purchases @relation(fields: [id_purchase], references: [id_purchase])
+  dish     Dishes    @relation(fields: [id_dish], references: [id_dish])
+
+  // constrains
+  @@unique([id_dish, id_purchase])
+}
+
+model Purchase_Status {
+  id_purchase_status      Int                       @id @default(autoincrement())
+  status                  String                    @unique
+  Purchase_Status_History Purchase_Status_History[]
+  Purchases               Purchases[]
+}
+
+model Purchase_Status_History {
+  id_purchase        Int
+  id_purchase_status Int
+  status_init_at     DateTime @default(now())
+
+  purchase        Purchases       @relation(references: [id_purchase], fields: [id_purchase])
+  purchase_Status Purchase_Status @relation(references: [id_purchase_status], fields: [id_purchase_status])
+
+  @@id([id_purchase, id_purchase_status])
+}
+
+model Purchases {
+  id_purchase        Int @id @default(autoincrement())
+  id_user            Int
+  id_purchase_status Int
+
+  purchased_at DateTime @default(now())
+  updated_at   DateTime @default(now())
+
+  // relations
+  user            Users           @relation(fields: [id_user], references: [id_user])
+  purchase_status Purchase_Status @relation(fields: [id_purchase_status], references: [id_purchase_status])
+
+  Purchase_Items          Purchase_Items[]
+  Purchase_Status_History Purchase_Status_History[]
+
+  // constrains
+  @@unique([id_purchase, id_purchase_status])
+}
+
+model Receipes {
+  id_receipe    Int @id @default(autoincrement())
+  id_dish       Int
+  id_ingredient Int
+
+  // relations
+  dish       Dishes      @relation(fields: [id_dish], references: [id_dish])
+  ingredient Ingredients @relation(fields: [id_ingredient], references: [id_ingredient])
+
+  // constrains
+  @@unique([id_dish, id_ingredient])
+}
+
+model User_Types {
+  id_user_type Int     @id @default(autoincrement())
+  type         String  @unique
+  Users        Users[]
+}
+
+model Users {
+  id_user      Int         @id @default(autoincrement())
+  name         String
+  email        String      @unique
+  password     String
+  avatar_url   String?
+  user_type    User_Types  @relation(fields: [id_user_type], references: [id_user_type])
+  id_user_type Int
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @default(now()) @updatedAt
+  Purchases    Purchases[]
+}

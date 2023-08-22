@@ -1,0 +1,12 @@
+model Receipes {
+    id_receipe Int @id @default(autoincrement())
+    id_dish Int
+    id_ingredient Int
+
+    // relations
+    dish Dishes @relation(fields: [id_dish], references: [id_dish])
+    ingredient Ingredients @relation(fields: [id_ingredient], references: [id_ingredient])
+
+    // constrains
+    @@unique([id_dish, id_ingredient])
+}

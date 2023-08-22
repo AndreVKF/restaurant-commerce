@@ -1,0 +1,16 @@
+model Purchases {
+    id_purchase Int @id @default(autoincrement())
+    id_user Int
+    id_purchase_status Int
+
+    purchased_at DateTime @default(now())
+    updated_at DateTime @default(now())
+
+    // relations
+    user Users @relation(fields: [id_user], references: [id_user])
+    purchase_status Purchase_Status @relation(fields: [id_purchase_status], references: [id_purchase_status])
+
+    // constrains
+    @@unique([id_purchase, id_purchase_status])
+
+}

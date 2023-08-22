@@ -1,0 +1,10 @@
+model Purchase_Status_History {
+    id_purchase Int
+    id_purchase_status Int
+    status_init_at DateTime @default(now())
+
+    purchase Purchases @relation(references: [id_purchase], fields: [id_purchase])
+    purchase_Status Purchase_Status @relation(references: [id_purchase_status], fields: [id_purchase_status])
+
+    @@id([id_purchase, id_purchase_status])
+}

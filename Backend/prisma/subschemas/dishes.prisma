@@ -1,0 +1,16 @@
+model Dishes {
+    id_dish Int @id @default(autoincrement())
+    id_dish_category Int
+    name String @unique
+    description String
+    image_url String?
+    price Int 
+    created_at DateTime @default(now())
+    updated_at DateTime @default(now()) @updatedAt
+
+    // relations
+    dish_category Dish_Categories @relation(fields: [id_dish_category], references: [id_dish_category])
+
+    // constrains
+    @@unique([id_dish, id_dish_category])
+}

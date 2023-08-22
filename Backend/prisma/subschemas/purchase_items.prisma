@@ -1,0 +1,13 @@
+model Purchase_Items {
+    id_purchase_item String @id @default(uuid())
+    id_purchase Int
+    id_dish Int
+    quantity Int
+
+    // relations
+    purchase Purchases @relation(fields: [id_purchase], references: [id_purchase])
+    dish Dishes @relation(fields: [id_dish], references: [id_dish])
+
+    // constrains
+    @@unique([id_dish, id_purchase])
+}

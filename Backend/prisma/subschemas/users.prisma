@@ -1,0 +1,12 @@
+model Users {
+    id_user Int @id @default(autoincrement())
+    name String
+    email String @unique
+    password String
+    avatar_url String? 
+    user_type User_Types @relation(fields: [id_user_type], references: [id_user_type])
+    id_user_type Int
+    created_at DateTime @default(now())
+    updated_at DateTime @default(now()) @updatedAt
+}
+
