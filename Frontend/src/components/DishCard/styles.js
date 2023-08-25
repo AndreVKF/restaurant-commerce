@@ -1,6 +1,13 @@
 import styled from "styled-components"
 
-import { poppins_100_medium, roboto_small_regular } from "../../styles/utils"
+import {
+  poppins_100_medium,
+  poppins_300_bold,
+  roboto_smaller_regular,
+  roboto_small_regular,
+  roboto_biggest_regular,
+  devices,
+} from "../../styles/utils"
 
 export const Container = styled.div`
   width: 21rem;
@@ -28,6 +35,27 @@ export const Container = styled.div`
     ${poppins_100_medium}
     text-align: center;
   }
+
+  > p {
+    display: none;
+  }
+
+  @media screen and ${devices.desktop} {
+    width: 30.4rem;
+    gap: 1.5rem;
+    padding: 2.4rem;
+    padding-bottom: 4.6rem;
+
+    > h2 {
+      ${poppins_300_bold}
+    }
+
+    > p {
+      ${roboto_smaller_regular}
+      display: inline;
+      text-align: center;
+    }
+  }
 `
 
 export const MarkersContainer = styled.div`
@@ -47,6 +75,10 @@ export const MarkersContainer = styled.div`
 export const PriceTag = styled.div`
   ${roboto_small_regular}
   color: ${({ theme }) => theme.COLORS.CAKE_100};
+
+  @media screen and ${devices.desktop} {
+    ${roboto_biggest_regular}
+  }
 `
 
 export const ButtonContainer = styled.div`
@@ -64,5 +96,9 @@ export const ButtonContainer = styled.div`
 
   > button {
     width: 100%;
+  }
+
+  @media screen and ${devices.desktop} {
+    flex-direction: row;
   }
 `

@@ -30,7 +30,9 @@ const index = () => {
           <IngredientContainer name="Batata" />
         </IngredientsContainer>
         <ButtonsContainer>
-          <DishAdder size={"medium"} />
+          <div>
+            <DishAdder size={"medium"} />
+          </div>
 
           <Button>
             <Receipt />

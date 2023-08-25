@@ -4,7 +4,7 @@ const index = () => {
   return (
     <Container>
       <img
-        src="/images/BannerImage.png"
+        src="/images/Mask group.png"
         alt="Imagem de comidas saborosas e saudáveis"
       />
 

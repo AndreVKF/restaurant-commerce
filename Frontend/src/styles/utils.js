@@ -167,12 +167,27 @@ export const image_big = css`
   object-fit: cover;
 `
 
-const breakpoints = {
+export const breakpoints = {
   sx: "420px",
-  sm: "450px",
+  sm: "768px",
+  fullscreen: "1600px",
 }
 
 export const devices = {
   sx: `(max-width: ${breakpoints.sx})`,
   sm: `(max-width: ${breakpoints.sm})`,
+  desktop: `(min-width: ${breakpoints.sm})`,
+  fullscreen: `(min-width: ${breakpoints.fullscreen})`,
 }
+
+export const screen_reader_only = css`
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  overflow: hidden;
+
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  appearance: none;
+`

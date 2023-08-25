@@ -10,7 +10,9 @@ import Footer from "../../components/Footer"
 import HomeBanner from "../../components/HomeBanner"
 import DishSlider from "../../components/DishSlider"
 
-const index = () => {
+import { useEffect, useState } from "react"
+
+const Home = () => {
   return (
     <Container>
       <Header />
@@ -40,4 +42,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Home

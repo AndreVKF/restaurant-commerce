@@ -16,5 +16,7 @@ export const Container = styled.div`
     padding: 1.4rem;
     border: none;
     border-radius: 0.8rem;
+
+    resize: none;
   }
 `

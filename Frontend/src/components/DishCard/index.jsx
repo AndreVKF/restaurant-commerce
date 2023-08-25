@@ -22,6 +22,7 @@ const index = () => {
         alt="Imagem de uma receita deliciosa"
       />
       <h2>Torradas de Parma</h2>
+      <p>Delicioso folheado de pêssego com folhas de hortelã.</p>
       <PriceTag>
         <span>R$ 25,97</span>
       </PriceTag>

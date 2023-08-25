@@ -19,6 +19,8 @@ const index = () => {
       </HeaderContainer>
 
       <FormContainer>
+        <h2>Faça login</h2>
+
         <InputWrapper>
           <label htmlFor="email">Email</label>
           <Input
@@ -36,13 +38,11 @@ const index = () => {
             placeholder="No mínimo 6 caracteres"
           />
         </InputWrapper>
+        <Button>
+          <span>Entrar</span>
+        </Button>
+        <span>Criar uma conta</span>
       </FormContainer>
-
-      <Button>
-        <span>Entrar</span>
-      </Button>
-
-      <span>Criar uma conta</span>
     </Container>
   )
 }

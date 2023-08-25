@@ -10,7 +10,28 @@ import { Container, SwiperContainer } from "./styles"
 
 import DishCard from "../DishCard"
 
-const index = ({ props }) => {
+import { useEffect, useState } from "react"
+import { useGetDimensions } from "../../hooks/dimensions"
+
+import { breakpoints } from "../../styles/utils"
+
+const DishSlider = ({ slidesPerView }) => {
+  const [numberSlides, setNumberSlides] = useState(2)
+  const { width, height } = useGetDimensions()
+
+  useEffect(() => {
+    const xlBreakpoint = Number(breakpoints.fullscreen.replace(/\D/g, ""))
+    console.log(xlBreakpoint)
+
+    if (width >= xlBreakpoint) {
+      setNumberSlides(4)
+    } else if (width >= 1400) {
+      setNumberSlides(3)
+    } else {
+      setNumberSlides(2)
+    }
+  }, [width])
+
   return (
     <Container>
       <h2>Refeições</h2>
@@ -19,14 +40,26 @@ const index = ({ props }) => {
         <Swiper
           // install Swiper modules
           modules={[Navigation, EffectFade, A11y]}
-          spaceBetween={8}
-          slidesPerView={2}
-          loop
+          spaceBetween={120}
+          slidesPerView={numberSlides}
+          loop={true}
+          loopFillGroupWithBlank={false}
           navigation
-          scrollbar={{ draggable: true }}
           // onSwiper={(swiper) => console.log(swiper)}
           // onSlideChange={() => console.log("slide change")}
         >
+          <SwiperSlide>
+            <DishCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <DishCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <DishCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <DishCard />
+          </SwiperSlide>
           <SwiperSlide>
             <DishCard />
           </SwiperSlide>
@@ -45,4 +78,4 @@ const index = ({ props }) => {
   )
 }
 
-export default index
+export default DishSlider

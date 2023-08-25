@@ -1,5 +1,7 @@
 import styled from "styled-components"
 
+import { devices } from "../../styles/utils"
+
 export const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -15,5 +17,10 @@ export const MainContainer = styled.main`
   > div {
     padding-top: 2rem;
     padding-left: 0.8rem;
+  }
+
+  @media screen and ${devices.desktop} {
+    padding-left: 12.1rem;
+    padding-right: 12.1rem;
   }
 `

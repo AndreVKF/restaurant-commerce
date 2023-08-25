@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-import { roboto_small_regular } from "../../styles/utils"
+import { roboto_small_regular, poppins_100_medium } from "../../styles/utils"
 
 export const Container = styled.div`
   display: flex;
@@ -31,5 +31,13 @@ export const Container = styled.div`
       ${roboto_small_regular}
       color: ${({ theme }) => theme.COLORS.LIGHT_500};
     }
+  }
+
+  > span {
+    ${poppins_100_medium}
+    color: ${({ theme }) => {
+      theme.COLORS.LIGHT_100
+    }};
+    white-space: nowrap;
   }
 `

@@ -35,11 +35,11 @@ const index = () => {
     <Container>
       <Header />
       <MainContainer>
-        <GoBack size="small" />
+        <GoBack />
         <h1>Novo prato</h1>
 
         <FormContainer>
-          <FormInputWrapper>
+          <FormInputWrapper $name={"upload-img"}>
             <label htmlFor="upload-img">Imagem do prato</label>
             <Input
               icon={FiUpload}
@@ -51,31 +51,38 @@ const index = () => {
               <span>selecione imagem</span>
             </Input>
           </FormInputWrapper>
-          <FormInputWrapper>
+          <FormInputWrapper $name={"dish-name"}>
             <label htmlFor="dish-name">Nome</label>
             <Input type="text" placeholder="Ex.: Salada Cesar" id="dish-name" />
           </FormInputWrapper>
-          <FormInputWrapper>
+          <FormInputWrapper $name={"dish-category"}>
             <label htmlFor="dish-category">Categoria</label>
             <SelectInput options={categoryArray} id="dish-category" />
           </FormInputWrapper>
-          <FormInputWrapper>
+          <FormInputWrapper $name={"dish-ingredients"}>
             <label htmlFor="dish-ingredients">Ingredientes</label>
             <MultiSelect options={ingredientsArray} />
           </FormInputWrapper>
-          <FormInputWrapper>
+          <FormInputWrapper $name={"dish-price"}>
+            <label htmlFor="dish-price">Preço</label>
+            <Input type="text" placeholder="R$ 0,00" id="dish-price" />
+          </FormInputWrapper>
+          <FormInputWrapper $name={"dish-description"}>
             <label htmlFor="dish-description">Descrição</label>
             <TextArea
               id="dish-description"
               placeholder="Fale brevemente sobre o prato, seus ingredientes e composição"
             />
           </FormInputWrapper>
-          <ButtonContainer>
-            <Button color={theme.COLORS.TOMATO_400}>
-              <span>Salvar alterações</span>
-            </Button>
-          </ButtonContainer>
         </FormContainer>
+        <ButtonContainer>
+          <Button color={theme.COLORS.TOMATO_400}>
+            <span>Salvar alterações</span>
+          </Button>
+          <Button color={theme.COLORS.TOMATO_400}>
+            <span>Salvar alterações</span>
+          </Button>
+        </ButtonContainer>
       </MainContainer>
       <Footer />
     </Container>

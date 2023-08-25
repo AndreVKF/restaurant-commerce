@@ -19,6 +19,8 @@ const index = () => {
       </HeaderContainer>
 
       <FormContainer>
+        <h2>Faça login</h2>
+
         <InputWrapper>
           <label htmlFor="name">Seu nome</label>
           <Input type="name" id="name" placeholder="Exemplo: Maria da Silva" />
@@ -41,13 +43,12 @@ const index = () => {
             placeholder="No mínimo 6 caracteres"
           />
         </InputWrapper>
+        <Button>
+          <span>Criar conta</span>
+        </Button>
+
+        <span>Já tenho uma conta</span>
       </FormContainer>
-
-      <Button>
-        <span>Criar conta</span>
-      </Button>
-
-      <span>Já tenho uma conta</span>
     </Container>
   )
 }
