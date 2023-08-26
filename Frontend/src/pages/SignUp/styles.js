@@ -62,7 +62,8 @@ export const FormContainer = styled.form`
 
   margin-bottom: 3.2rem;
 
-  > span {
+  > span,
+  > a {
     width: 100%;
     text-align: center;
     margin-top: 3.2rem;

@@ -23,6 +23,13 @@ export const Container = styled.div`
     background-color: ${({ theme }) => theme.COLORS.DARK_900};
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
 
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px ${({ theme }) => theme.COLORS.DARK_900}
+        inset;
+      -webkit-text-fill-color: ${({ theme }) =>
+        theme.COLORS.LIGHT_100} !important;
+    }
+
     &:focus {
       outline: none;
     }

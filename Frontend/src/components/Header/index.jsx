@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom"
+import { useAuthContext } from "../../hooks/authentication"
+
 import {
-  Header,
+  HeaderMobile,
   LogoBanner,
   ReceiptBanner,
   HeaderDesktop,
@@ -16,28 +19,34 @@ import Receipt from "../../assets/icons/Receipt.svg"
 import Input from "../Input"
 import Button from "../Button"
 
-const index = () => {
+const Header = () => {
   return (
     <>
-      <Header>
-        <img src={Menu} alt="Ir para o menu" />
+      <HeaderMobile>
+        <Link to="menu">
+          <img src={Menu} alt="Ir para o menu" />
+        </Link>
 
-        <LogoBanner>
-          <img src={Logo} alt="Logo food-explorer" />
-          <h1>food explorer</h1>
-        </LogoBanner>
+        <Link to="/">
+          <LogoBanner>
+            <img src={Logo} alt="Logo food-explorer" />
+            <h1>food explorer</h1>
+          </LogoBanner>
+        </Link>
 
         <ReceiptBanner>
           <img src={Receipt} alt="Icone de recibo" />
           <span>0</span>
         </ReceiptBanner>
-      </Header>
+      </HeaderMobile>
 
       <HeaderDesktop>
-        <LogoBanner>
-          <img src={Logo} alt="Logo food-explorer" />
-          <h1>food explorer</h1>
-        </LogoBanner>
+        <Link to="/">
+          <LogoBanner>
+            <img src={Logo} alt="Logo food-explorer" />
+            <h1>food explorer</h1>
+          </LogoBanner>
+        </Link>
         <InputBanner>
           <Input
             type="text"
@@ -58,4 +67,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Header

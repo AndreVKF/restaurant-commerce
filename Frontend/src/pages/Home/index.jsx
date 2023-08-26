@@ -10,8 +10,6 @@ import Footer from "../../components/Footer"
 import HomeBanner from "../../components/HomeBanner"
 import DishSlider from "../../components/DishSlider"
 
-import { useEffect, useState } from "react"
-
 const Home = () => {
   return (
     <Container>

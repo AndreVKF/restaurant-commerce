@@ -2,7 +2,7 @@ import { Container } from "./styles"
 
 import { ReactComponent as LeftArrow } from "../../assets/icons/CaretLeft.svg"
 
-const index = ({ size = "regular" }) => {
+const GoBack = ({ size = "regular" }) => {
   return (
     <Container $size={size}>
       <LeftArrow />
@@ -11,4 +11,4 @@ const index = ({ size = "regular" }) => {
   )
 }
 
-export default index
+export default GoBack

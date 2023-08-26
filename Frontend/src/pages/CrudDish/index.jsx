@@ -30,7 +30,7 @@ const ingredientsArray = [
   { value: 2, label: "Farinha" },
 ]
 
-const index = () => {
+const CrudDish = () => {
   return (
     <Container>
       <Header />
@@ -89,4 +89,4 @@ const index = () => {
   )
 }
 
-export default index
+export default CrudDish

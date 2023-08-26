@@ -2,7 +2,7 @@ import { PiCaretDownBold } from "react-icons/pi"
 
 import { Container } from "./styles"
 
-const index = ({ options }) => {
+const SelectInput = ({ options }) => {
   return (
     <Container>
       <select>
@@ -20,4 +20,4 @@ const index = ({ options }) => {
   )
 }
 
-export default index
+export default SelectInput

@@ -1,6 +1,6 @@
 import { Container } from "./styles"
 
-const index = ({ text }) => {
+const RedirectSearch = ({ text }) => {
   return (
     <Container>
       <span>{text}</span>
@@ -8,4 +8,4 @@ const index = ({ text }) => {
   )
 }
 
-export default index
+export default RedirectSearch

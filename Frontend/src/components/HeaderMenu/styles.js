@@ -15,6 +15,10 @@ export const Header = styled.header`
 
   padding: 5.6rem 2.8rem 2.4rem;
 
+  > svg {
+    cursor: pointer;
+  }
+
   > span {
     ${roboto_small_regular}
     font-size: 2.2rem;

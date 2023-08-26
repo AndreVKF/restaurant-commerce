@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 import { devices } from "../../styles/utils"
 
-export const Header = styled.header`
+export const HeaderMobile = styled.header`
   width: 100%;
   height: 11.4rem;
 

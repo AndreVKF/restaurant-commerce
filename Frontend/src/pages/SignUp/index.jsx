@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 import {
   Container,
   HeaderContainer,
@@ -10,7 +12,7 @@ import { ReactComponent as Logo } from "../../assets/icons/Logo.svg"
 import Input from "../../components/Input"
 import Button from "../../components/Button"
 
-const index = () => {
+const SignUp = () => {
   return (
     <Container>
       <HeaderContainer>
@@ -19,7 +21,7 @@ const index = () => {
       </HeaderContainer>
 
       <FormContainer>
-        <h2>Faça login</h2>
+        <h2>Crie sua conta</h2>
 
         <InputWrapper>
           <label htmlFor="name">Seu nome</label>
@@ -47,10 +49,12 @@ const index = () => {
           <span>Criar conta</span>
         </Button>
 
-        <span>Já tenho uma conta</span>
+        <Link to="/">
+          <span>Já tenho uma conta</span>
+        </Link>
       </FormContainer>
     </Container>
   )
 }
 
-export default index
+export default SignUp

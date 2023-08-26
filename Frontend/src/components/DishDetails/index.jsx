@@ -11,7 +11,7 @@ import IngredientContainer from "../IngredientContainer"
 
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg"
 
-const index = () => {
+const DishDetails = () => {
   return (
     <Container>
       <img src="/images/Mask group-1.png" alt="Imagem de um prato delicioso" />
@@ -44,4 +44,4 @@ const index = () => {
   )
 }
 
-export default index
+export default DishDetails

@@ -3,7 +3,7 @@ import Select, { components } from "react-select"
 
 import theme from "../../styles/theme"
 
-const index = ({ options }) => {
+const MultiSelectInput = ({ options }) => {
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -88,4 +88,4 @@ const index = ({ options }) => {
   )
 }
 
-export default index
+export default MultiSelectInput

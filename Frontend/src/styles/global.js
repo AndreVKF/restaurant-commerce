@@ -32,6 +32,7 @@ export default createGlobalStyle`
 
   a {
     text-decoration: none;
+    color: ${({ theme }) => theme.COLORS.LIGHT_300};
   }
 
   button, a {
@@ -55,6 +56,4 @@ export default createGlobalStyle`
   input[type=number] {
     -moz-appearance: textfield;
   }
-
-
 `

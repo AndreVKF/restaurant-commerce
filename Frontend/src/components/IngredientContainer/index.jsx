@@ -1,7 +1,7 @@
 import { Container } from "./styles"
 
-const index = ({ name }) => {
+const IngredientsContainer = ({ name }) => {
   return <Container>{name}</Container>
 }
 
-export default index
+export default IngredientsContainer

@@ -2,7 +2,7 @@ import { Container, LogoBanner, CopyrightBanner } from "./styles"
 
 import LogoDark from "../../assets/icons/LogoDark.svg"
 
-const index = () => {
+const Footer = () => {
   return (
     <Container>
       <LogoBanner>
@@ -16,4 +16,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Footer

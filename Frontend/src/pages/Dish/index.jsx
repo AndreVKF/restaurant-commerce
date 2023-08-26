@@ -6,7 +6,7 @@ import Footer from "../../components/Footer"
 import GoBack from "../../components/GoBack"
 import DishDetails from "../../components/DishDetails"
 
-const index = () => {
+const Dish = () => {
   return (
     <Container>
       <Header />
@@ -21,4 +21,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Dish

@@ -1,6 +1,6 @@
 import { Container } from "./styles"
 
-const index = () => {
+const DishSearch = () => {
   return (
     <Container>
       <img
@@ -13,4 +13,4 @@ const index = () => {
   )
 }
 
-export default index
+export default DishSearch

@@ -10,7 +10,7 @@ import { ReactComponent as Heart } from "../../assets/icons/Heart.svg"
 import Button from "../Button"
 import DishAdder from "../DishAdder"
 
-const index = () => {
+const DishCard = () => {
   return (
     <Container>
       <MarkersContainer>
@@ -38,4 +38,4 @@ const index = () => {
   )
 }
 
-export default index
+export default DishCard

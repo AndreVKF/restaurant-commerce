@@ -1,6 +1,6 @@
 import { Container } from "./styles"
 
-const index = ({ icon: Icon, children, ...rest }) => {
+const Input = ({ icon: Icon, children, ...rest }) => {
   return (
     <Container>
       {Icon && <Icon />}
@@ -11,4 +11,4 @@ const index = ({ icon: Icon, children, ...rest }) => {
   )
 }
 
-export default index
+export default Input

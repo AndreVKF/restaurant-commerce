@@ -8,7 +8,7 @@ import Input from "../../components/Input"
 import DishSearch from "../../components/DishSearch"
 import RedirectSearch from "../../components/RedirectSearch"
 
-const index = () => {
+const Menu = () => {
   return (
     <Container>
       <HeaderMenu />
@@ -38,4 +38,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Menu

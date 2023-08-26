@@ -10,7 +10,9 @@ import { ReactComponent as Logo } from "../../assets/icons/Logo.svg"
 import Input from "../../components/Input"
 import Button from "../../components/Button"
 
-const index = () => {
+import { Link } from "react-router-dom"
+
+const SignIn = () => {
   return (
     <Container>
       <HeaderContainer>
@@ -20,7 +22,6 @@ const index = () => {
 
       <FormContainer>
         <h2>Faça login</h2>
-
         <InputWrapper>
           <label htmlFor="email">Email</label>
           <Input
@@ -29,7 +30,6 @@ const index = () => {
             placeholder="Exemplo: exemplo@exemplo.com.br"
           />
         </InputWrapper>
-
         <InputWrapper>
           <label htmlFor="password">Senha</label>
           <Input
@@ -41,10 +41,12 @@ const index = () => {
         <Button>
           <span>Entrar</span>
         </Button>
-        <span>Criar uma conta</span>
+        <Link to="/register">
+          <span>Criar uma conta</span>
+        </Link>
       </FormContainer>
     </Container>
   )
 }
 
-export default index
+export default SignIn

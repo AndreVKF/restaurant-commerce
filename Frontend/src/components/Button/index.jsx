@@ -1,6 +1,6 @@
 import { Container } from "./styles"
 
-const index = ({ children, color, ...rest }) => {
+const Button = ({ children, color, ...rest }) => {
   return (
     <Container $color={color} {...rest}>
       {children}
@@ -8,4 +8,4 @@ const index = ({ children, color, ...rest }) => {
   )
 }
 
-export default index
+export default Button

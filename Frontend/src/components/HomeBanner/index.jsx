@@ -1,6 +1,6 @@
 import { Container, TextBanner } from "./styles"
 
-const index = () => {
+const HomeBanner = () => {
   return (
     <Container>
       <img
@@ -18,4 +18,4 @@ const index = () => {
   )
 }
 
-export default index
+export default HomeBanner

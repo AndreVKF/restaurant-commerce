@@ -18,5 +18,12 @@ export const Container = styled.div`
     border-radius: 0.8rem;
 
     resize: none;
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px ${({ theme }) => theme.COLORS.DARK_900}
+        inset;
+      -webkit-text-fill-color: ${({ theme }) =>
+        theme.COLORS.LIGHT_100} !important;
+    }
   }
 `

@@ -21,7 +21,6 @@ const DishSlider = ({ slidesPerView }) => {
 
   useEffect(() => {
     const xlBreakpoint = Number(breakpoints.fullscreen.replace(/\D/g, ""))
-    console.log(xlBreakpoint)
 
     if (width >= xlBreakpoint) {
       setNumberSlides(4)
@@ -43,7 +42,6 @@ const DishSlider = ({ slidesPerView }) => {
           spaceBetween={120}
           slidesPerView={numberSlides}
           loop={true}
-          loopFillGroupWithBlank={false}
           navigation
           // onSwiper={(swiper) => console.log(swiper)}
           // onSlideChange={() => console.log("slide change")}
