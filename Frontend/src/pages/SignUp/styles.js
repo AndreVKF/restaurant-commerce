@@ -25,6 +25,7 @@ export const Container = styled.div`
     justify-items: end;
     align-items: center;
     padding: 0;
+    padding-bottom: 4rem;
     padding-right: 5rem;
     gap: calc(8rem + 10vw);
   }

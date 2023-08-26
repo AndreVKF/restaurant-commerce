@@ -68,7 +68,8 @@ export const IngredientsContainer = styled.div`
 
   @media screen and ${devices.desktop} {
     justify-items: start;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
   }
 
   @media screen and ${devices.fullscreen} {
@@ -83,10 +84,7 @@ export const ButtonsContainer = styled.div`
   gap: 4rem;
 
   width: 100%;
-
-  > button {
-    max-width: 18.8rem;
-  }
+  margin-top: 2.4rem;
 
   @media screen and ${devices.desktop} {
     justify-content: start;

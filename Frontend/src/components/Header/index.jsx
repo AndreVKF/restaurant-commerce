@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuthContext } from "../../hooks/authentication"
 
 import {
@@ -10,7 +10,7 @@ import {
 } from "./styles"
 
 import { FiSearch, FiUpload } from "react-icons/fi"
-import { PiReceipt } from "react-icons/pi"
+import { ReactComponent as PiReceipt } from "../../assets/icons/Receipt.svg"
 
 import Menu from "../../assets/icons/Menu.svg"
 import Logo from "../../assets/icons/Logo.svg"
@@ -20,6 +20,14 @@ import Input from "../Input"
 import Button from "../Button"
 
 const Header = () => {
+  const navigate = useNavigate()
+  const { userData } = useAuthContext()
+  const { isAdmin } = userData
+
+  const handleGoToNewDish = () => {
+    navigate("/create_dish")
+  }
+
   return (
     <>
       <HeaderMobile>
@@ -30,7 +38,10 @@ const Header = () => {
         <Link to="/">
           <LogoBanner>
             <img src={Logo} alt="Logo food-explorer" />
-            <h1>food explorer</h1>
+            <div>
+              <h1>food explorer</h1>
+              {isAdmin && <span>admin</span>}
+            </div>
           </LogoBanner>
         </Link>
 
@@ -44,7 +55,10 @@ const Header = () => {
         <Link to="/">
           <LogoBanner>
             <img src={Logo} alt="Logo food-explorer" />
-            <h1>food explorer</h1>
+            <div>
+              <h1>food explorer</h1>
+              {isAdmin && <span>admin</span>}
+            </div>
           </LogoBanner>
         </Link>
         <InputBanner>
@@ -54,10 +68,16 @@ const Header = () => {
             placeholder="Busque por pratos ou ingredientes"
           />
         </InputBanner>
-        <Button>
-          <PiReceipt size={22} />
-          <span>Pedidos (0)</span>
-        </Button>
+        {isAdmin ? (
+          <Button onClick={handleGoToNewDish}>
+            <span>Novo prato</span>
+          </Button>
+        ) : (
+          <Button>
+            <PiReceipt />
+            <span>Pedidos (0)</span>
+          </Button>
+        )}
 
         <div>
           <FiUpload size={28} />

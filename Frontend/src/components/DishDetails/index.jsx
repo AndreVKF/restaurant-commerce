@@ -1,3 +1,5 @@
+import { useAuthContext } from "../../hooks/authentication"
+
 import {
   Container,
   DescriptionContainer,
@@ -12,6 +14,9 @@ import IngredientContainer from "../IngredientContainer"
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg"
 
 const DishDetails = () => {
+  const { userData } = useAuthContext()
+  const isAdmin = { userData }
+
   return (
     <Container>
       <img src="/images/Mask group-1.png" alt="Imagem de um prato delicioso" />
@@ -29,16 +34,24 @@ const DishDetails = () => {
           <IngredientContainer name="Batata" />
           <IngredientContainer name="Batata" />
         </IngredientsContainer>
-        <ButtonsContainer>
-          <div>
-            <DishAdder size={"medium"} />
-          </div>
 
-          <Button>
-            <Receipt />
-            <span>pedir ∙ R$ 25,00</span>
-          </Button>
-        </ButtonsContainer>
+        {isAdmin ? (
+          <ButtonsContainer>
+            <Button>
+              <span>Editar prato</span>
+            </Button>
+          </ButtonsContainer>
+        ) : (
+          <ButtonsContainer>
+            <div>
+              <DishAdder size={"medium"} />
+            </div>
+            <Button>
+              <Receipt />
+              <span>pedir ∙ R$ 25,00</span>
+            </Button>
+          </ButtonsContainer>
+        )}
       </DescriptionContainer>
     </Container>
   )

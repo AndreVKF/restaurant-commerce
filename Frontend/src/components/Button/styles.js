@@ -18,4 +18,8 @@ export const Container = styled.button`
   p {
     white-space: nowrap;
   }
+
+  svg {
+    transform: scale(0.8);
+  }
 `

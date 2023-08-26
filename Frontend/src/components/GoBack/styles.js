@@ -19,6 +19,7 @@ export const Container = styled.div`
   align-items: center;
   gap: 0.8rem;
 
+  cursor: pointer;
   color: ${({ theme }) => theme.COLORS.LIGHT_100};
 
   > svg {

@@ -68,6 +68,10 @@ export const ButtonContainer = styled.div`
   width: 100%;
   margin-top: 2.4rem;
 
+  display: flex;
+  align-items: center;
+  gap: 3.2rem;
+
   @media screen and ${devices.desktop} {
     display: flex;
     justify-content: end;

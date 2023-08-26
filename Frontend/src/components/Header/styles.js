@@ -1,6 +1,10 @@
 import styled from "styled-components"
 
-import { devices } from "../../styles/utils"
+import {
+  roboto_smallest_regular,
+  roboto_bigger_bold,
+  devices,
+} from "../../styles/utils"
 
 export const HeaderMobile = styled.header`
   width: 100%;
@@ -25,20 +29,40 @@ export const LogoBanner = styled.div`
   gap: 0.8rem;
 
   > img {
-    width: 2.46rem;
-    height: 2.46rem;
+    width: 3rem;
+    height: 3rem;
     object-fit: contain;
   }
 
-  > h1 {
-    font-family: "Roboto", sans-serif;
-    font-weight: bold;
-    font-size: 2.11rem;
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  h1 {
+    ${roboto_bigger_bold}
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
+    white-space: nowrap;
+  }
+
+  span {
+    ${roboto_smallest_regular}
+    color: ${({ theme }) => theme.COLORS.CAKE_100};
   }
 
   @media screen and ${devices.desktop} {
     min-width: 16rem;
+
+    > div {
+      position: relative;
+    }
+
+    span {
+      position: absolute;
+      bottom: -1.6rem;
+      right: 0;
+    }
   }
 `
 

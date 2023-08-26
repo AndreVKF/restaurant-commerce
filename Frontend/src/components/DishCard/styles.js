@@ -11,6 +11,7 @@ import {
 
 export const Container = styled.div`
   width: 21rem;
+  min-height: 29.2rem;
 
   display: flex;
   flex-direction: column;
@@ -29,6 +30,7 @@ export const Container = styled.div`
   > img {
     width: 8.8rem;
     height: 8.8rem;
+    object-fit: cover;
   }
 
   > h2 {
@@ -42,9 +44,16 @@ export const Container = styled.div`
 
   @media screen and ${devices.desktop} {
     width: 30.4rem;
+    min-height: 46.2rem;
     gap: 1.5rem;
     padding: 2.4rem;
     padding-bottom: 4.6rem;
+
+    > img {
+      width: 17.6rem;
+      height: 17.6rem;
+      object-fit: cover;
+    }
 
     > h2 {
       ${poppins_300_bold}
@@ -68,7 +77,6 @@ export const MarkersContainer = styled.div`
 
   > svg {
     cursor: pointer;
-    fill: ${({ theme }) => theme.COLORS.LIGHT_300};
   }
 `
 

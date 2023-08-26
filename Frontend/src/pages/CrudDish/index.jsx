@@ -1,3 +1,6 @@
+import { useEffect } from "react"
+import { useResolvedPath } from "react-router-dom"
+
 import {
   Container,
   MainContainer,
@@ -16,7 +19,7 @@ import MultiSelect from "../../components/MultiSelectInput"
 import TextArea from "../../components/TextArea"
 import Button from "../../components/Button"
 
-import theme from "../..//styles/theme"
+import theme from "../../styles/theme"
 
 const categoryArray = [
   { value: 0, label: "Refeição" },
@@ -31,12 +34,42 @@ const ingredientsArray = [
 ]
 
 const CrudDish = () => {
+  const { pathname } = useResolvedPath()
+  const formHeader = pathname.includes("create_dish")
+    ? "Adicionar prato"
+    : pathname.includes("update_dish")
+    ? "Editar prato"
+    : ""
+
+  const ButtonOptions = () => {
+    if (pathname.includes("create_dish")) {
+      return (
+        <Button color={theme.COLORS.TOMATO_400}>
+          <span>Adicionar</span>
+        </Button>
+      )
+    } else if (pathname.includes("update_dish")) {
+      return (
+        <>
+          <Button color={theme.COLORS.DARK_800}>
+            <span>Excluir prato</span>
+          </Button>
+          <Button color={theme.COLORS.TOMATO_400}>
+            <span>Salvar alterações</span>
+          </Button>
+        </>
+      )
+    } else {
+      return <></>
+    }
+  }
+
   return (
     <Container>
       <Header />
       <MainContainer>
         <GoBack />
-        <h1>Novo prato</h1>
+        <h1>{formHeader}</h1>
 
         <FormContainer>
           <FormInputWrapper $name={"upload-img"}>
@@ -75,14 +108,7 @@ const CrudDish = () => {
             />
           </FormInputWrapper>
         </FormContainer>
-        <ButtonContainer>
-          <Button color={theme.COLORS.TOMATO_400}>
-            <span>Salvar alterações</span>
-          </Button>
-          <Button color={theme.COLORS.TOMATO_400}>
-            <span>Salvar alterações</span>
-          </Button>
-        </ButtonContainer>
+        <ButtonContainer>{ButtonOptions()}</ButtonContainer>
       </MainContainer>
       <Footer />
     </Container>
