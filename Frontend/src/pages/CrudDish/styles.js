@@ -40,7 +40,7 @@ export const FormContainer = styled.form`
     display: grid;
     grid-template:
       "upload-img dish-name dish-category" 8rem
-      "dish-ingredients dish-ingredients dish-price" 8rem
+      "dish-ingredients dish-ingredients dish-price" min-content
       "dish-description dish-description dish-description" 20.4rem / 1fr 1fr 1fr;
     gap: 3.2rem;
   }

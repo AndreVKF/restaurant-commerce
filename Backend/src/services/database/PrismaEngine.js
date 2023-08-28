@@ -13,6 +13,12 @@ class PrismaEngine {
     return registry
   }
 
+  createMany = async (tbName, data) => {
+    const records = await this.client[tbName].createMany({ data })
+
+    return records
+  }
+
   getUnique = async (tbName, where = {}, fields = []) => {
     const select = {}
     fields.forEach((field) => (select[field] = true))
@@ -25,6 +31,12 @@ class PrismaEngine {
     }
 
     return registry
+  }
+
+  getMany = async (tbName, where = {}) => {
+    const records = await this.client[tbName].findMany(where)
+
+    return records
   }
 
   getUser = async (email) => {

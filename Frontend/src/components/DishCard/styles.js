@@ -31,11 +31,13 @@ export const Container = styled.div`
     width: 8.8rem;
     height: 8.8rem;
     object-fit: cover;
+    cursor: pointer;
   }
 
   > h2 {
     ${poppins_100_medium}
     text-align: center;
+    cursor: pointer;
   }
 
   > p {

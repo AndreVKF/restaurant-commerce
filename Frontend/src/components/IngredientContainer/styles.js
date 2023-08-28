@@ -10,5 +10,6 @@ export const Container = styled.div`
 
   > span {
     ${poppins_100_medium}
+    white-space: nowrap;
   }
 `

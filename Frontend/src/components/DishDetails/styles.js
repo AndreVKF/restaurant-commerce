@@ -73,7 +73,7 @@ export const IngredientsContainer = styled.div`
   }
 
   @media screen and ${devices.fullscreen} {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 `
 

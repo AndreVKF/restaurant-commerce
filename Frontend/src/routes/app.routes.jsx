@@ -10,8 +10,8 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/dish/:id" element={<Dish />} />
-      <Route path="/update_dish/:id" element={<CrudDish />} />
+      <Route path="/dish/:id_dish" element={<Dish />} />
+      <Route path="/update_dish/:id_dish" element={<CrudDish />} />
       <Route path="/create_dish" element={<CrudDish />} />
       <Route path="/menu" element={<Menu />} />
       <Route path="*" element={<NotFound />} />

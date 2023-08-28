@@ -24,9 +24,10 @@ export const AuthProvider = ({ children }) => {
           email: data.user.email,
           avatar_url: data.user.avatar_url,
         }
+        console.log(data)
 
         setUserData(user)
-        setIsAdmin(data.user_type === "ADMIN" ? true : false)
+        setIsAdmin(data.user.user_type === "ADMIN" ? true : false)
         storeInfo(user, token)
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`
       })

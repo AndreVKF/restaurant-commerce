@@ -4,7 +4,7 @@ const DishSearch = () => {
   return (
     <Container>
       <img
-        src="/images/Mask group-1.png"
+        src="/images/default_dish.png"
         alt="Imagem de uma receita deliciosa"
       />
       <h3>Salada Ravanella</h3>

@@ -2,8 +2,9 @@ import { Container } from "./styles"
 import Select, { components } from "react-select"
 
 import theme from "../../styles/theme"
+import { useEffect } from "react"
 
-const MultiSelectInput = ({ options }) => {
+const MultiSelectInput = ({ options, defaultValue, ...rest }) => {
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -30,6 +31,10 @@ const MultiSelectInput = ({ options }) => {
         backgroundColor: `${theme.COLORS.DARK_500}`,
       },
       cursor: "pointer",
+    }),
+    valueContainer: (base, state) => ({
+      ...base,
+      overflow: "hidden",
     }),
     menuList: (base, state) => ({
       ...base,
@@ -79,10 +84,11 @@ const MultiSelectInput = ({ options }) => {
         options={options}
         components={{ NoOptionsMessage }}
         styles={customStyles}
-        defaultValue={[options[0], options[1]]}
+        defaultValue={defaultValue}
         isMulti
         isSearchable
         isClearable
+        {...rest}
       ></Select>
     </Container>
   )

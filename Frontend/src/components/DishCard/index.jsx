@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { useAuthContext } from "../../hooks/authentication"
 
 import {
@@ -13,21 +14,35 @@ import { ReactComponent as Pencil } from "../../assets/icons/Pencil.svg"
 import Button from "../Button"
 import DishAdder from "../DishAdder"
 
-const DishCard = () => {
-  const { userData, isAdmin } = useAuthContext()
+const DishCard = ({ dish }) => {
+  const { isAdmin } = useAuthContext()
+  const navigate = useNavigate()
+
+  const formatDishPrice = (price) => {
+    return String(price / 100).replace(".", ",")
+  }
+
+  const handleGoToDish = (id_dish) => {
+    navigate(`/dish/${id_dish}`)
+  }
 
   return (
     <Container>
       <MarkersContainer>{isAdmin ? <Pencil /> : <Heart />}</MarkersContainer>
 
       <img
-        src="/images/Mask group-1.png"
+        onClick={() => handleGoToDish(dish.id_dish)}
+        src={
+          dish.dish_image_url ? dish.dish_image_url : "/images/default_dish.png"
+        }
         alt="Imagem de uma receita deliciosa"
       />
-      <h2>Torradas de Parma</h2>
-      <p>Delicioso folheado de pêssego com folhas de hortelã.</p>
+      <h2 onClick={() => handleGoToDish(dish.id_dish)}>
+        {dish.dish_name} <span>{">"}</span>
+      </h2>
+      <p>{dish.dish_description}</p>
       <PriceTag>
-        <span>R$ 25,97</span>
+        <span>R$ {formatDishPrice(dish.dish_price)}</span>
       </PriceTag>
 
       {!isAdmin && (

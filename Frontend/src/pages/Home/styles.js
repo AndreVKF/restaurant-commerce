@@ -10,6 +10,8 @@ export const Container = styled.div`
 `
 export const MainContainer = styled.main`
   flex: 1;
+
+  padding-bottom: 4.8rem;
 `
 export const BannerContainer = styled.div`
   padding-top: 1.5rem;
@@ -24,10 +26,26 @@ export const BannerContainer = styled.div`
   }
 `
 
-export const DishesRouletteContainer = styled.div`
-  padding: 2.4rem;
+export const DishesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+
+  gap: 2.4rem;
+  padding-left: calc(2rem + 2vw);
+  padding-right: calc(2rem + 2vw);
 
   @media screen and ${devices.desktop} {
-    padding: 6.2rem 12.3rem 4.8rem;
+    padding-left: calc(4rem + 2vw);
+    padding-right: calc(10rem + 2vw);
+    gap: 4.8rem;
+  }
+`
+
+export const DishesRouletteContainer = styled.div`
+  @media screen and ${devices.desktop} {
+  }
+
+  @media screen and ${devices.fullscreen} {
   }
 `

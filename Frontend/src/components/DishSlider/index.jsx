@@ -15,7 +15,7 @@ import { useGetDimensions } from "../../hooks/dimensions"
 
 import { breakpoints } from "../../styles/utils"
 
-const DishSlider = ({ slidesPerView }) => {
+const DishSlider = ({ category, dishesArray }) => {
   const [numberSlides, setNumberSlides] = useState(2)
   const { width, height } = useGetDimensions()
 
@@ -33,7 +33,7 @@ const DishSlider = ({ slidesPerView }) => {
 
   return (
     <Container>
-      <h2>Refeições</h2>
+      <h2>{category}</h2>
 
       <SwiperContainer>
         <Swiper
@@ -46,30 +46,14 @@ const DishSlider = ({ slidesPerView }) => {
           // onSwiper={(swiper) => console.log(swiper)}
           // onSlideChange={() => console.log("slide change")}
         >
-          <SwiperSlide>
-            <DishCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DishCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DishCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DishCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DishCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DishCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DishCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <DishCard />
-          </SwiperSlide>
+          {dishesArray &&
+            dishesArray.map((dish, idx) => {
+              return (
+                <SwiperSlide key={dish.id_dish}>
+                  <DishCard dish={dish} />
+                </SwiperSlide>
+              )
+            })}
         </Swiper>
       </SwiperContainer>
     </Container>

@@ -13,7 +13,7 @@ const sizingObject = {
 }
 
 export const Container = styled.div`
-  width: 100%;
+  width: fit-content;
 
   display: flex;
   align-items: center;

@@ -12,27 +12,30 @@ import Button from "../Button"
 import IngredientContainer from "../IngredientContainer"
 
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg"
+import { useEffect } from "react"
 
-const DishDetails = () => {
+const DishDetails = ({ dish }) => {
   const { userData, isAdmin } = useAuthContext()
 
   return (
     <Container>
-      <img src="/images/Mask group-1.png" alt="Imagem de um prato delicioso" />
+      <img
+        src={
+          dish.dish_image_url ? dish.dish_image_url : "/images/default_dish.png"
+        }
+        alt="Imagem de um prato delicioso"
+      />
 
       <DescriptionContainer>
-        <h2>Salada Ravanello</h2>
-        <p>
-          Rabanetes, folhas verdes e molho agridoce salpicados com gergelim.
-        </p>
-        <IngredientsContainer>
-          <IngredientContainer name="Batata" />
-          <IngredientContainer name="Batata" />
-          <IngredientContainer name="Batata" />
-          <IngredientContainer name="Batata" />
-          <IngredientContainer name="Batata" />
-          <IngredientContainer name="Batata" />
-        </IngredientsContainer>
+        <h2>{dish.dish_name}</h2>
+        <p>{dish.dish_description}</p>
+        {dish.ingredients && (
+          <IngredientsContainer>
+            {dish.ingredients.split(",").map((ingredient, idx) => {
+              return <IngredientContainer key={idx} name={ingredient} />
+            })}
+          </IngredientsContainer>
+        )}
 
         {isAdmin ? (
           <ButtonsContainer>

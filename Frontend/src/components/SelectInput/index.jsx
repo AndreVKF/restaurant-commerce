@@ -2,10 +2,10 @@ import { PiCaretDownBold } from "react-icons/pi"
 
 import { Container } from "./styles"
 
-const SelectInput = ({ options }) => {
+const SelectInput = ({ options, ...rest }) => {
   return (
     <Container>
-      <select>
+      <select {...rest}>
         {options &&
           options.map((option, idx) => {
             return (

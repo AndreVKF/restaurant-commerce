@@ -40,7 +40,7 @@ export const Container = styled.div`
     }
   }
 
-  > span {
+  span {
     ${poppins_100_medium}
     color: ${({ theme }) => {
       theme.COLORS.LIGHT_100

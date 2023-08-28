@@ -1,7 +1,11 @@
 import { Container } from "./styles"
 
 const IngredientsContainer = ({ name }) => {
-  return <Container>{name}</Container>
+  return (
+    <Container>
+      <span>{name}</span>
+    </Container>
+  )
 }
 
 export default IngredientsContainer
