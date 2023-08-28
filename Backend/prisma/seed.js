@@ -2,6 +2,9 @@ const { PrismaClient } = require("@prisma/client")
 const { hash } = require("bcrypt")
 const env = require("../Env")
 
+const ingredients = require("./data/ingredients")
+const categories = require("./data/dishCategories")
+
 const prisma = new PrismaClient()
 
 async function main() {
@@ -55,6 +58,55 @@ async function main() {
     create: { id_purchase_status: 4, status: "ORDER_DELIVERED" },
     update: {},
   })
+
+  await prisma.Ingredients.deleteMany({})
+  const insertIngredients = ingredients.map((ingredient) => {
+    return prisma.Ingredients.create({
+      data: ingredient,
+    })
+  })
+  await Promise.all(insertIngredients)
+
+  await prisma.Dish_Categories.deleteMany({})
+  const insertCategories = categories.map((category) => {
+    return prisma.Dish_Categories.create({
+      data: category,
+    })
+  })
+  await Promise.all(insertCategories)
+
+  await prisma.$executeRaw`
+  CREATE VIEW IF NOT EXISTS v_Dishes_Ingredients AS 
+    WITH cte_dishes_ingredients AS (
+  SELECT 
+    dr.id_dish AS id_dish,
+    dr.id_ingredient AS id_ingredient,
+    i.name AS ingredient
+  FROM 
+    dish_receipe dr
+  LEFT JOIN Ingredients i ON dr.id_ingredient = i.id_ingredient 
+  ) 
+  SELECT id_dish, GROUP_CONCAT(ingredient) AS ingredients FROM cte_dishes_ingredients
+  `
+
+  await prisma.$executeRaw`
+  CREATE VIEW IF NOT EXISTS v_Dish_Details AS
+  SELECT
+    d.id_dish AS id_dish,
+    d.id_dish_category AS id_dish_category,
+    dc.name AS dish_category,
+    d.name AS dish_name,
+    d.description AS dish_description,
+    vdi.ingredients AS ingredients,
+    d.image_url AS dish_image_url,
+    d.price AS dish_price,
+    d.created_at AS created_at,
+    d.updated_at AS updated_at
+  FROM 
+    Dishes AS d
+  LEFT JOIN Dish_Categories AS dc ON d.id_dish_category = dc.id_dish_category
+  LEFT JOIN v_Dishes_Ingredients AS vdi ON d.id_dish = vdi.id_dish
+  `
 }
 
 main()

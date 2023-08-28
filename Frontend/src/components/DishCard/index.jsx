@@ -14,8 +14,7 @@ import Button from "../Button"
 import DishAdder from "../DishAdder"
 
 const DishCard = () => {
-  const { userData } = useAuthContext()
-  const isAdmin = { userData }
+  const { userData, isAdmin } = useAuthContext()
 
   return (
     <Container>

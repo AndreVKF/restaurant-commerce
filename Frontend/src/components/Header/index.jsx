@@ -21,11 +21,15 @@ import Button from "../Button"
 
 const Header = () => {
   const navigate = useNavigate()
-  const { userData } = useAuthContext()
-  const { isAdmin } = userData
+  const { userData, logout, isAdmin } = useAuthContext()
 
   const handleGoToNewDish = () => {
     navigate("/create_dish")
+  }
+
+  const handleLogout = () => {
+    logout()
+    navigate("/")
   }
 
   return (
@@ -80,7 +84,7 @@ const Header = () => {
         )}
 
         <div>
-          <FiUpload size={28} />
+          <FiUpload size={28} onClick={handleLogout} />
         </div>
       </HeaderDesktop>
     </>

@@ -1,0 +1,17 @@
+module.exports = [
+  { name: "Batata" },
+  { name: "Farinha de Trigo" },
+  { name: "Cebola" },
+  { name: "Tomate" },
+  { name: "Maçã" },
+  { name: "Ovo" },
+  { name: "Banana" },
+  { name: "Farinha de Rosca" },
+  { name: "Chocolate" },
+  { name: "Alface" },
+  { name: "Pão Naan" },
+  { name: "Rabanete" },
+  { name: "Cebolinha" },
+  { name: "Nozes" },
+  { name: "Carne de Peixe" },
+]

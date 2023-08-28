@@ -1,0 +1,11 @@
+model Dish_Receipe {
+    id_dish Int
+    id_ingredient Int
+
+    // relations
+    dish Dishes @relation(fields: [id_dish], references: [id_dish], onDelete: Cascade)
+    ingredient Ingredients @relation(fields: [id_ingredient], references: [id_ingredient], onDelete: Cascade)
+
+    // constrains
+    @@unique([id_dish, id_ingredient])
+}

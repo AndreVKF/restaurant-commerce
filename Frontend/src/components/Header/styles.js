@@ -111,6 +111,7 @@ export const HeaderDesktop = styled.header`
     > div {
       > svg {
         transform: rotate(90deg);
+        cursor: pointer;
       }
     }
   }

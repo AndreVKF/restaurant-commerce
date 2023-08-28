@@ -14,8 +14,7 @@ import IngredientContainer from "../IngredientContainer"
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg"
 
 const DishDetails = () => {
-  const { userData } = useAuthContext()
-  const isAdmin = { userData }
+  const { userData, isAdmin } = useAuthContext()
 
   return (
     <Container>

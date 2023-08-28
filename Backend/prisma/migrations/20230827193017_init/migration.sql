@@ -5,6 +5,14 @@ CREATE TABLE "Dish_Categories" (
 );
 
 -- CreateTable
+CREATE TABLE "Dish_Receipe" (
+    "id_dish" INTEGER NOT NULL,
+    "id_ingredient" INTEGER NOT NULL,
+    CONSTRAINT "Dish_Receipe_id_dish_fkey" FOREIGN KEY ("id_dish") REFERENCES "Dishes" ("id_dish") ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT "Dish_Receipe_id_ingredient_fkey" FOREIGN KEY ("id_ingredient") REFERENCES "Ingredients" ("id_ingredient") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CreateTable
 CREATE TABLE "Dishes" (
     "id_dish" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "id_dish_category" INTEGER NOT NULL,
@@ -14,7 +22,7 @@ CREATE TABLE "Dishes" (
     "price" INTEGER NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "Dishes_id_dish_category_fkey" FOREIGN KEY ("id_dish_category") REFERENCES "Dish_Categories" ("id_dish_category") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Dishes_id_dish_category_fkey" FOREIGN KEY ("id_dish_category") REFERENCES "Dish_Categories" ("id_dish_category") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -62,15 +70,6 @@ CREATE TABLE "Purchases" (
 );
 
 -- CreateTable
-CREATE TABLE "Receipes" (
-    "id_receipe" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "id_dish" INTEGER NOT NULL,
-    "id_ingredient" INTEGER NOT NULL,
-    CONSTRAINT "Receipes_id_dish_fkey" FOREIGN KEY ("id_dish") REFERENCES "Dishes" ("id_dish") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Receipes_id_ingredient_fkey" FOREIGN KEY ("id_ingredient") REFERENCES "Ingredients" ("id_ingredient") ON DELETE RESTRICT ON UPDATE CASCADE
-);
-
--- CreateTable
 CREATE TABLE "User_Types" (
     "id_user_type" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "type" TEXT NOT NULL
@@ -93,6 +92,9 @@ CREATE TABLE "Users" (
 CREATE UNIQUE INDEX "Dish_Categories_name_key" ON "Dish_Categories"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Dish_Receipe_id_dish_id_ingredient_key" ON "Dish_Receipe"("id_dish", "id_ingredient");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Dishes_name_key" ON "Dishes"("name");
 
 -- CreateIndex
@@ -106,9 +108,6 @@ CREATE UNIQUE INDEX "Purchase_Status_status_key" ON "Purchase_Status"("status");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Purchases_id_purchase_id_purchase_status_key" ON "Purchases"("id_purchase", "id_purchase_status");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Receipes_id_dish_id_ingredient_key" ON "Receipes"("id_dish", "id_ingredient");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_Types_type_key" ON "User_Types"("type");

@@ -27,8 +27,9 @@ export const Container = styled.div`
     padding: 0;
     padding-bottom: 4rem;
 
-    padding-right: 5rem;
-    gap: calc(8rem + 10vw);
+    padding-right: 4rem;
+    padding-left: 4rem;
+    gap: calc(8rem + 8vw);
   }
 `
 
@@ -46,6 +47,7 @@ export const HeaderContainer = styled.header`
     ${roboto_big_bold}
     font-size: 3.8rem;
     color: ${({ theme }) => theme.COLORS.LIGHT_100};
+    white-space: nowrap;
   }
 
   @media screen and ${devices.desktop} {
@@ -82,6 +84,7 @@ export const FormContainer = styled.form`
     background: ${({ theme }) => theme.COLORS.DARK_700};
     padding: 6.4rem;
     border-radius: 1.6rem;
+    min-width: 40rem;
     max-width: 47.6rem;
     justify-self: start;
 

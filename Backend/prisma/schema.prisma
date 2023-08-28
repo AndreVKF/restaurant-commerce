@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Tue Aug 22 2023 17:49:44 GMT-0300 (Brasilia Standard Time)✨
+//🧩Don't Edit this file.✨Generated in Sun Aug 27 2023 16:30:15 GMT-0300 (Brasilia Standard Time)✨
 
 generator client {
   provider = "prisma-client-js"
@@ -15,6 +15,18 @@ model Dish_Categories {
   Dishes           Dishes[]
 }
 
+model Dish_Receipe {
+  id_dish       Int
+  id_ingredient Int
+
+  // relations
+  dish       Dishes      @relation(fields: [id_dish], references: [id_dish], onDelete: Cascade)
+  ingredient Ingredients @relation(fields: [id_ingredient], references: [id_ingredient], onDelete: Cascade)
+
+  // constrains
+  @@unique([id_dish, id_ingredient])
+}
+
 model Dishes {
   id_dish          Int      @id @default(autoincrement())
   id_dish_category Int
@@ -26,18 +38,18 @@ model Dishes {
   updated_at       DateTime @default(now()) @updatedAt
 
   // relations
-  dish_category  Dish_Categories  @relation(fields: [id_dish_category], references: [id_dish_category])
+  dish_category  Dish_Categories  @relation(fields: [id_dish_category], references: [id_dish_category], onDelete: Cascade)
+  Dish_Receipe   Dish_Receipe[]
   Purchase_Items Purchase_Items[]
-  Receipes       Receipes[]
 
   // constrains
   @@unique([id_dish, id_dish_category])
 }
 
 model Ingredients {
-  id_ingredient Int        @id @default(autoincrement())
+  id_ingredient Int            @id @default(autoincrement())
   name          String
-  Receipes      Receipes[]
+  Dish_Receipe  Dish_Receipe[]
 }
 
 model Purchase_Items {
@@ -89,19 +101,6 @@ model Purchases {
 
   // constrains
   @@unique([id_purchase, id_purchase_status])
-}
-
-model Receipes {
-  id_receipe    Int @id @default(autoincrement())
-  id_dish       Int
-  id_ingredient Int
-
-  // relations
-  dish       Dishes      @relation(fields: [id_dish], references: [id_dish])
-  ingredient Ingredients @relation(fields: [id_ingredient], references: [id_ingredient])
-
-  // constrains
-  @@unique([id_dish, id_ingredient])
 }
 
 model User_Types {

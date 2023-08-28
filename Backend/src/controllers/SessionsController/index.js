@@ -14,7 +14,7 @@ class SessionsController {
   create = async (req, res) => {
     const { email, password } = req.body
 
-    const user = await this.dbEngine.getUnique("Users", { email })
+    const user = await this.dbEngine.getUser(email)
 
     if (!user) {
       throw new ErrorHandler("Email e/ou password incorretos!!", 401)
@@ -29,13 +29,19 @@ class SessionsController {
     // create jwt
     const { secret, expiresIn } = jwtConfig
     const token = sign({ userId: user.id_user }, secret, { expiresIn })
-    delete user.password
+
+    const returnUserData = {
+      name: user.name,
+      email: user.email,
+      avatar_url: user.avatar_url,
+      user_type: user.user_type.type,
+    }
 
     const date = new Date()
     const tokenExpiresIn = new Date(date.setDate(date.getDate() + 1))
 
     res.json({
-      user,
+      user: returnUserData,
       token,
       expiresIn: tokenExpiresIn.toLocaleString(),
     })
@@ -52,7 +58,19 @@ class SessionsController {
 
     try {
       const { userId } = verify(token, jwtConfig.secret)
-      return res.status(200).json({ message: "Token validado!!" })
+      const user = await this.dbEngine.getUnique("Users", { id_user: userId })
+      const userType = await this.dbEngine.getUnique("User_Types", {
+        id_user_type: user.id_user_type,
+      })
+
+      const returnUserData = {
+        name: user.name,
+        email: user.email,
+        avatar_url: user.avatar_url,
+        user_type: userType.type,
+      }
+
+      return res.status(200).json(returnUserData)
     } catch {
       throw new ErrorHandler("Token inválido!!", 401)
     }

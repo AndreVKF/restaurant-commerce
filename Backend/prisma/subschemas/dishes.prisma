@@ -9,7 +9,7 @@ model Dishes {
     updated_at DateTime @default(now()) @updatedAt
 
     // relations
-    dish_category Dish_Categories @relation(fields: [id_dish_category], references: [id_dish_category])
+    dish_category Dish_Categories @relation(fields: [id_dish_category], references: [id_dish_category], onDelete: Cascade)
 
     // constrains
     @@unique([id_dish, id_dish_category])

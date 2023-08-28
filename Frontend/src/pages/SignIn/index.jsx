@@ -1,3 +1,7 @@
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import { useAuthContext } from "../../hooks/authentication"
+
 import {
   Container,
   HeaderContainer,
@@ -8,11 +12,27 @@ import {
 import { ReactComponent as Logo } from "../../assets/icons/Logo.svg"
 
 import Input from "../../components/Input"
+import PasswordInput from "../../components/PasswordInput"
 import Button from "../../components/Button"
 
-import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
 
 const SignIn = () => {
+  const { login } = useAuthContext()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const handleClick = (event) => {
+    event.preventDefault()
+
+    if (email === "" || password === "") {
+      toast.error("Email e password são campos obrigatórios!!")
+      return
+    }
+
+    login({ email, password })
+  }
+
   return (
     <Container>
       <HeaderContainer>
@@ -27,18 +47,21 @@ const SignIn = () => {
           <Input
             type="email"
             id="email"
-            placeholder="Exemplo: exemplo@exemplo.com.br"
+            placeholder="Exemplo: exemplo@exemplo.com"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="password">Senha</label>
-          <Input
-            type="password"
+          <PasswordInput
             id="password"
             placeholder="No mínimo 6 caracteres"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
         </InputWrapper>
-        <Button>
+        <Button onClick={handleClick}>
           <span>Entrar</span>
         </Button>
         <Link to="/register">

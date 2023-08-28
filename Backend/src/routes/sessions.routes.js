@@ -15,7 +15,7 @@ class SessionsRouter {
 
   setRouters = () => {
     this.router.post("/", this.sessionsController.create)
-    this.router.get("/validate", authenticate, this.sessionsController.validate)
+    this.router.get("/validate", this.sessionsController.validate)
   }
 }
 
