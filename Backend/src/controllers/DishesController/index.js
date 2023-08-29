@@ -19,15 +19,15 @@ class DishesController {
   }
 
   create = async (req, res) => {
-    console.log(req.file)
     const { id_dish_category, name, description, price, ingredients } = req.body
     const data = {
-      id_dish_category,
+      id_dish_category: Number(id_dish_category),
       name: name.toUpperCase(),
       description,
-      price,
+      price: Number(price) * 100,
     }
     const dishImage = req?.file?.filename
+    const ingredientsParsed = JSON.parse(ingredients)
 
     // check if dish is already registered
     const isDishOnDb = await this.dbEngine.getUnique(this.tbName, {
@@ -41,17 +41,19 @@ class DishesController {
     // add image
     if (dishImage) {
       const diskStorage = new DiskStorage()
-      const imageFilename = diskStorage.saveFile(dishImage)
+      const imageFilename = await diskStorage.saveFile(dishImage)
+
       data.image_url = imageFilename
     }
 
     const dish = await this.dbEngine.createSingle(this.tbName, data)
 
     const id_dish = dish.id_dish
-    const insertIngredients = ingredients.map((ingredient) => {
+
+    const insertIngredients = ingredientsParsed.map((ingredient) => {
       return this.dbEngine.createSingle("Dish_Receipe", {
         id_dish,
-        id_ingredient: ingredient.value,
+        id_ingredient: Number(ingredient.value),
       })
     })
 
@@ -60,6 +62,10 @@ class DishesController {
       .catch((err) => {
         throw new ErrorHandler("Não foi possível atualizar ingredientes!!")
       })
+  }
+
+  delete = async (req, res) => {
+    const { id_dish } = req.params
   }
 }
 

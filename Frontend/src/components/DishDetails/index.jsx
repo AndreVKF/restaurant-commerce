@@ -13,6 +13,7 @@ import IngredientContainer from "../IngredientContainer"
 
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg"
 import { useEffect } from "react"
+import { api } from "../../services/api"
 
 const DishDetails = ({ dish }) => {
   const { userData, isAdmin } = useAuthContext()
@@ -21,7 +22,9 @@ const DishDetails = ({ dish }) => {
     <Container>
       <img
         src={
-          dish.dish_image_url ? dish.dish_image_url : "/images/default_dish.png"
+          dish.dish_image_url
+            ? `${api.defaults.baseURL}/files/${dish.dish_image_url}`
+            : "/images/default_dish.png"
         }
         alt="Imagem de um prato delicioso"
       />

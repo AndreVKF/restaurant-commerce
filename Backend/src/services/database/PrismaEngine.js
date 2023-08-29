@@ -39,6 +39,24 @@ class PrismaEngine {
     return records
   }
 
+  delte = async (tbName, where = {}) => {
+    if (Object.keys(where).length === 0) {
+      console.log("Delete must have where condition!")
+      return
+    }
+
+    await this.client[tbName].delete({ where })
+  }
+
+  deleteMany = async (tbName, where = {}) => {
+    if (Object.keys(where).length === 0) {
+      console.log("Delete must have where condition!")
+      return
+    }
+
+    await this.client[tbName].deleteMany({ where })
+  }
+
   getUser = async (email) => {
     let user = await this.client.users.findUnique({
       where: { email },

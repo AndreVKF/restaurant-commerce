@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useResolvedPath } from "react-router-dom"
+import { useLocation, useParams, useResolvedPath } from "react-router-dom"
 
 import {
   Container,
@@ -29,12 +29,14 @@ const CrudDish = () => {
   const [uploadImg, setUploadImg] = useState(null)
   const [dishName, setDishName] = useState("")
   const [dishPrice, setDishPrice] = useState("")
-  const [dishCategory, setDishCategory] = useState(null)
+  const [dishCategory, setDishCategory] = useState("")
   const [dishIngredients, setDishIngredients] = useState([])
   const [dishDescription, setDishDescription] = useState("")
 
   const [categoryArray, setCategoryArray] = useState([])
   const [ingredientsArray, setIngredientsArray] = useState([])
+
+  const { id_dish } = useParams()
 
   const { pathname } = useResolvedPath()
   const formHeader = pathname.includes("create_dish")
@@ -81,7 +83,7 @@ const CrudDish = () => {
     const rePattern = /^[0-9]+\.?[0-9]{0,2}$/
 
     if (value === "" || rePattern.test(value)) {
-      setDishPrice(Number(value))
+      setDishPrice(value)
     }
   }
 
@@ -96,21 +98,23 @@ const CrudDish = () => {
       return
     }
 
-    let fileUploadForm
+    let fileUploadForm = new FormData()
+    fileUploadForm.append("id_dish_category", dishCategory)
+    fileUploadForm.append("name", dishName)
+    fileUploadForm.append("description", dishDescription)
+    fileUploadForm.append("price", dishPrice)
+    fileUploadForm.append("ingredients", JSON.stringify(dishIngredients))
+
     if (uploadImg) {
-      fileUploadForm = new FormData()
-      fileUploadForm.append("upload-img", uploadImg)
+      fileUploadForm.append("dish_image", uploadImg)
+    }
+
+    for (let vl of fileUploadForm.values()) {
+      console.log(vl)
     }
 
     api
-      .post(ROUTES.CREATE_DISH, {
-        id_dish_category: dishCategory,
-        name: dishName,
-        description: dishDescription,
-        price: dishPrice,
-        ingredients: dishIngredients,
-        fileUploadForm,
-      })
+      .post(ROUTES.CREATE_DISH, fileUploadForm)
       .then((resp) => {
         toast.success("Prato adicionado com sucesso na base de dados!!")
       })

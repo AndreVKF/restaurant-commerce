@@ -13,6 +13,7 @@ import { ReactComponent as Pencil } from "../../assets/icons/Pencil.svg"
 
 import Button from "../Button"
 import DishAdder from "../DishAdder"
+import { api } from "../../services/api"
 
 const DishCard = ({ dish }) => {
   const { isAdmin } = useAuthContext()
@@ -26,14 +27,26 @@ const DishCard = ({ dish }) => {
     navigate(`/dish/${id_dish}`)
   }
 
+  const handleGoToUpdateDish = (id_dish) => {
+    navigate(`/update_dish/${id_dish}`)
+  }
+
   return (
     <Container>
-      <MarkersContainer>{isAdmin ? <Pencil /> : <Heart />}</MarkersContainer>
+      <MarkersContainer>
+        {isAdmin ? (
+          <Pencil onClick={() => handleGoToUpdateDish(dish.id_dish)} />
+        ) : (
+          <Heart />
+        )}
+      </MarkersContainer>
 
       <img
         onClick={() => handleGoToDish(dish.id_dish)}
         src={
-          dish.dish_image_url ? dish.dish_image_url : "/images/default_dish.png"
+          dish.dish_image_url
+            ? `${api.defaults.baseURL}/files/${dish.dish_image_url}`
+            : "/images/default_dish.png"
         }
         alt="Imagem de uma receita deliciosa"
       />
