@@ -59,34 +59,44 @@ async function main() {
     update: {},
   })
 
-  await prisma.Ingredients.deleteMany({})
-  const insertIngredients = ingredients.map((ingredient) => {
-    return prisma.Ingredients.create({
-      data: ingredient,
+  let idx = 1
+  for (let ingredient of ingredients) {
+    await prisma.Ingredients.upsert({
+      where: { id_ingredient: idx },
+      create: { id_ingredient: idx, name: ingredient.name },
+      update: {},
     })
-  })
-  await Promise.all(insertIngredients)
+    idx++
+  }
 
-  await prisma.Dish_Categories.deleteMany({})
-  const insertCategories = categories.map((category) => {
-    return prisma.Dish_Categories.create({
-      data: category,
+  idx = 1
+  for (let category of categories) {
+    await prisma.Dish_Categories.upsert({
+      where: { id_dish_category: idx },
+      create: { id_dish_category: idx, name: category.name },
+      update: {},
     })
-  })
-  await Promise.all(insertCategories)
+    idx++
+  }
 
   await prisma.$executeRaw`
   CREATE VIEW IF NOT EXISTS v_Dishes_Ingredients AS 
-    WITH cte_dishes_ingredients AS (
+  WITH cte_dishes_ingredients AS (
+    SELECT 
+      dr.id_dish AS id_dish,
+      dr.id_ingredient AS id_ingredient,
+      i.name AS ingredient
+    FROM 
+      dish_receipe dr
+    LEFT JOIN Ingredients i ON dr.id_ingredient = i.id_ingredient 
+    ) 
   SELECT 
-    dr.id_dish AS id_dish,
-    dr.id_ingredient AS id_ingredient,
-    i.name AS ingredient
+      id_dish,
+      GROUP_CONCAT(ingredient) AS ingredients 
   FROM 
-    dish_receipe dr
-  LEFT JOIN Ingredients i ON dr.id_ingredient = i.id_ingredient 
-  ) 
-  SELECT id_dish, GROUP_CONCAT(ingredient) AS ingredients FROM cte_dishes_ingredients
+    cte_dishes_ingredients
+  GROUP BY
+    id_dish 
   `
 
   await prisma.$executeRaw`

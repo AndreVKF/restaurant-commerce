@@ -1,5 +1,7 @@
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuthContext } from "../../hooks/authentication"
+import { useCartContext } from "../../hooks/cart"
 
 import {
   Container,
@@ -13,15 +15,16 @@ import { ReactComponent as Pencil } from "../../assets/icons/Pencil.svg"
 
 import Button from "../Button"
 import DishAdder from "../DishAdder"
+
+import { titleizeText, adjustDishPrice } from "../../common/functions"
 import { api } from "../../services/api"
 
 const DishCard = ({ dish }) => {
   const { isAdmin } = useAuthContext()
+  const { cartDispatch } = useCartContext()
   const navigate = useNavigate()
 
-  const formatDishPrice = (price) => {
-    return String(price / 100).replace(".", ",")
-  }
+  const [count, setCount] = useState("01")
 
   const handleGoToDish = (id_dish) => {
     navigate(`/dish/${id_dish}`)
@@ -29,6 +32,15 @@ const DishCard = ({ dish }) => {
 
   const handleGoToUpdateDish = (id_dish) => {
     navigate(`/update_dish/${id_dish}`)
+  }
+
+  const handleAddToCart = () => {
+    const purchase = {
+      id_dish: dish.id_dish,
+      price: dish.dish_price,
+      quantity: Number(count),
+    }
+    cartDispatch({ type: "ADD", data: purchase })
   }
 
   return (
@@ -51,19 +63,19 @@ const DishCard = ({ dish }) => {
         alt="Imagem de uma receita deliciosa"
       />
       <h2 onClick={() => handleGoToDish(dish.id_dish)}>
-        {dish.dish_name} <span>{">"}</span>
+        {titleizeText(dish.dish_name)} <span>{">"}</span>
       </h2>
       <p>{dish.dish_description}</p>
       <PriceTag>
-        <span>R$ {formatDishPrice(dish.dish_price)}</span>
+        <span>R$ {adjustDishPrice(dish.dish_price)}</span>
       </PriceTag>
 
       {!isAdmin && (
         <ButtonContainer>
           <div>
-            <DishAdder />
+            <DishAdder count={count} setCount={setCount} />
           </div>
-          <Button>
+          <Button onClick={handleAddToCart}>
             <span>Incluir</span>
           </Button>
         </ButtonContainer>

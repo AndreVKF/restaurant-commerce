@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { useLocation, useParams, useResolvedPath } from "react-router-dom"
+import { toast } from "react-toastify"
+import { useNavigate, useParams, useResolvedPath } from "react-router-dom"
 
 import {
   Container,
@@ -18,14 +19,22 @@ import SelectInput from "../../components/SelectInput"
 import MultiSelect from "../../components/MultiSelectInput"
 import TextArea from "../../components/TextArea"
 import Button from "../../components/Button"
+import Loading from "../../components/Loading"
 
 import theme from "../../styles/theme"
 
 import { ROUTES } from "../../common/constants"
+import { insertStringIntoString, titleizeText } from "../../common/functions"
 import { api } from "../../services/api"
-import { toast } from "react-toastify"
 
 const CrudDish = () => {
+  const { id_dish } = useParams()
+  const { pathname } = useResolvedPath()
+  const navigate = useNavigate()
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingDishData, setIsLoadingDishData] = useState(false)
+
   const [uploadImg, setUploadImg] = useState(null)
   const [dishName, setDishName] = useState("")
   const [dishPrice, setDishPrice] = useState("")
@@ -36,14 +45,25 @@ const CrudDish = () => {
   const [categoryArray, setCategoryArray] = useState([])
   const [ingredientsArray, setIngredientsArray] = useState([])
 
-  const { id_dish } = useParams()
-
-  const { pathname } = useResolvedPath()
   const formHeader = pathname.includes("create_dish")
     ? "Adicionar prato"
     : pathname.includes("update_dish")
     ? "Editar prato"
     : ""
+
+  const resetStates = () => {
+    setIsLoading(true)
+    setIsLoadingDishData(false)
+
+    setUploadImg(null)
+    setDishName("")
+    setDishPrice("")
+    setDishCategory("")
+    setDishIngredients([])
+    setDishDescription("")
+    setCategoryArray([])
+    setIngredientsArray([])
+  }
 
   const ButtonOptions = () => {
     if (pathname.includes("create_dish")) {
@@ -58,7 +78,10 @@ const CrudDish = () => {
           <Button color={theme.COLORS.DARK_800} onClick={handleDelete}>
             <span>Excluir prato</span>
           </Button>
-          <Button color={theme.COLORS.TOMATO_400} onClick={handleUpdate}>
+          <Button
+            color={theme.COLORS.TOMATO_400}
+            onClick={() => handleUpdate(id_dish)}
+          >
             <span>Salvar alterações</span>
           </Button>
         </>
@@ -66,6 +89,35 @@ const CrudDish = () => {
     } else {
       return <></>
     }
+  }
+
+  const validateInputs = () => {
+    if (dishName === "" || dishPrice === "" || dishDescription === "") {
+      toast.error("Os campos Nome, Preço e Descrição são obrigatórios!!")
+      return false
+    }
+
+    if (dishIngredients.length === 0) {
+      toast.error("Selecione pelo menos um ingrediente!!")
+      return false
+    }
+
+    return true
+  }
+
+  const createUpdateForm = () => {
+    let fileUploadForm = new FormData()
+    fileUploadForm.append("id_dish_category", dishCategory)
+    fileUploadForm.append("name", dishName)
+    fileUploadForm.append("description", dishDescription)
+    fileUploadForm.append("price", dishPrice)
+    fileUploadForm.append("ingredients", JSON.stringify(dishIngredients))
+
+    if (uploadImg) {
+      fileUploadForm.append("dish_image", uploadImg)
+    }
+
+    return fileUploadForm
   }
 
   const handleImageUpdate = (event) => {
@@ -88,34 +140,15 @@ const CrudDish = () => {
   }
 
   const handleInsert = () => {
-    if (dishName === "" || dishPrice === "" || dishDescription === "") {
-      toast.error("Os campos Nome, Preço e Descrição são obrigatórios!!")
-      return
-    }
+    const isValidInputs = validateInputs()
+    if (!isValidInputs) return
 
-    if (dishIngredients.length === 0) {
-      toast.error("Selecione pelo menos um ingrediente!!")
-      return
-    }
-
-    let fileUploadForm = new FormData()
-    fileUploadForm.append("id_dish_category", dishCategory)
-    fileUploadForm.append("name", dishName)
-    fileUploadForm.append("description", dishDescription)
-    fileUploadForm.append("price", dishPrice)
-    fileUploadForm.append("ingredients", JSON.stringify(dishIngredients))
-
-    if (uploadImg) {
-      fileUploadForm.append("dish_image", uploadImg)
-    }
-
-    for (let vl of fileUploadForm.values()) {
-      console.log(vl)
-    }
+    let fileUploadForm = createUpdateForm()
 
     api
       .post(ROUTES.CREATE_DISH, fileUploadForm)
       .then((resp) => {
+        navigate("/")
         toast.success("Prato adicionado com sucesso na base de dados!!")
       })
       .catch((err) => {
@@ -126,49 +159,131 @@ const CrudDish = () => {
         }
       })
   }
-  const handleDelete = () => {}
-  const handleUpdate = () => {}
+  const handleDelete = () => {
+    const isOkayToDelete = confirm("Está certo que deseja deletar o prato!!")
 
-  useEffect(() => {
+    if (!isOkayToDelete) return
+
     api
-      .get(ROUTES.DISHES_CATEGORIES)
+      .delete(`${ROUTES.DISH}/${id_dish}`)
       .then((resp) => {
-        const categoryArrayAdj = resp.data.map((category) => {
-          return { value: category.id_dish_category, label: category.name }
-        })
-
-        setCategoryArray(categoryArrayAdj)
-        setDishCategory(categoryArrayAdj[0].value)
+        navigate("/")
+        toast.success(resp.data.message)
       })
       .catch((err) => {
         if (err.response) {
-          toast.error(err.response)
+          toast.error(err.response.data.message)
         } else {
-          toast.error("Não foi possível obter dados")
+          toast.error("Não foi possível deletar prato!!")
         }
       })
-  }, [])
+  }
+  const handleUpdate = (id_dish) => {
+    const isValidInputs = validateInputs()
+    if (!isValidInputs) return
 
-  useEffect(() => {
+    let fileUploadForm = createUpdateForm()
+
     api
-      .get(ROUTES.DISHES_INGREDIENTS)
+      .post(`${ROUTES.UPDATE_DISH}/${id_dish}`, fileUploadForm)
       .then((resp) => {
-        const ingredientsArrayAdj = resp.data.map((ingredient) => {
-          return { value: ingredient.id_ingredient, label: ingredient.name }
-        })
-
-        setIngredientsArray(ingredientsArrayAdj)
+        navigate("/")
+        toast.success("Prato atualizado com sucesso na base de dados!!")
       })
       .catch((err) => {
         if (err.response) {
-          toast.error(err.response)
+          toast.error(err.response.data.message)
         } else {
-          toast.error("Não foi possível obter dados")
+          toast.error("Não foi possível adicionar prato!!")
         }
       })
-  }, [])
+  }
 
-  return (
+  useEffect(() => {
+    const fetchCategoriesData = async () => {
+      const resp = await api.get(ROUTES.DISHES_CATEGORIES)
+
+      const categoryArrayAdj = resp.data.map((category) => {
+        return { value: category.id_dish_category, label: category.name }
+      })
+      setCategoryArray(categoryArrayAdj)
+      setDishCategory(categoryArrayAdj[0].value)
+    }
+
+    const fetchIngredientsData = async () => {
+      const resp = await api.get(ROUTES.DISHES_INGREDIENTS)
+
+      const ingredientsArrayAdj = resp.data.map((ingredient) => {
+        return { value: ingredient.id_ingredient, label: ingredient.name }
+      })
+
+      setIngredientsArray(ingredientsArrayAdj)
+    }
+
+    resetStates()
+    const fetchData = [fetchCategoriesData(), fetchIngredientsData()]
+
+    Promise.all(fetchData)
+      .then(() => setIsLoading(false))
+      .catch((err) => {
+        console.log(err)
+        toast.error("Não foi possível obter dados!!")
+      })
+  }, [pathname])
+
+  useEffect(() => {
+    if (isLoading) return
+
+    if (!pathname.includes("update_dish")) {
+      return
+    }
+
+    if (!id_dish) {
+      navigate("/dish_not_found")
+    }
+
+    // get dish data
+    const fetchData = async () => {
+      const resp = await api.get(`${ROUTES.DISHES_DETAILS}/${id_dish}`)
+
+      const { data } = resp
+
+      if (Object.keys(data).length === 0) navigate("/dish_not_found")
+
+      let dishPrice = String(Number(data.dish_price) / 100)
+      dishPrice = insertStringIntoString(dishPrice, ".", dishPrice.length - 2)
+
+      let selectedDishCategory = categoryArray.filter((category) => {
+        return category.label === data.dish_category
+      })
+
+      let selectedDishIngredients = data.ingredients.split(",")
+      let filteredIngredients = ingredientsArray.filter((ingredient) => {
+        return selectedDishIngredients.includes(ingredient.label)
+      })
+
+      setDishName(titleizeText(data.dish_name))
+      setDishPrice(dishPrice)
+      setDishCategory(selectedDishCategory[0].value)
+      setDishIngredients(filteredIngredients)
+      setDishDescription(data.dish_description)
+    }
+
+    setIsLoadingDishData(true)
+
+    fetchData()
+      .then(() => setIsLoadingDishData(false))
+      .catch((err) => {
+        console.log(err)
+        toast.error("Erro ao obter dados do prato!!")
+      })
+  }, [isLoading, pathname])
+
+  return isLoading || isLoadingDishData ? (
+    <Container>
+      <Loading />
+    </Container>
+  ) : (
     <Container>
       <Header />
       <MainContainer>
@@ -220,7 +335,7 @@ const CrudDish = () => {
               <label htmlFor="dish-ingredients">Ingredientes</label>
               <MultiSelect
                 options={ingredientsArray}
-                defaultValue={dishIngredients}
+                defaultValue={[...dishIngredients]}
                 onChange={(values) => setDishIngredients(values)}
               />
             </FormInputWrapper>

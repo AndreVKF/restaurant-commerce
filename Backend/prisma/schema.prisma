@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Sun Aug 27 2023 16:30:15 GMT-0300 (Brasilia Standard Time)✨
+//🧩Don't Edit this file.✨Generated in Tue Aug 29 2023 19:57:41 GMT-0300 (Brasilia Standard Time)✨
 
 generator client {
   provider = "prisma-client-js"
@@ -56,6 +56,7 @@ model Purchase_Items {
   id_purchase_item String @id @default(uuid())
   id_purchase      Int
   id_dish          Int
+  price            Int
   quantity         Int
 
   // relations

@@ -21,8 +21,11 @@ class DishDetailsController {
 
   show = async (req, res) => {
     const id_dish = req.params.id_dish
-    const [dish] = await this.dbEngine.getDishDetails(id_dish)
+    let [dish] = await this.dbEngine.getDishDetails(id_dish)
 
+    if (!dish) {
+      dish = {}
+    }
     return res.json(dish)
   }
 }

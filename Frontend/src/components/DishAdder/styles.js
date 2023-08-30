@@ -25,6 +25,13 @@ export const Container = styled.div`
   background: transparent;
   color: ${({ theme }) => theme.COLORS.LIGHT_300};
 
+  > div {
+    display: grid;
+    place-items: center;
+    height: ${(props) => sizingObject[props.$size].fontSize};
+    cursor: pointer;
+  }
+
   > svg {
     transform: scale(${(props) => sizingObject[props.$size].scale});
   }

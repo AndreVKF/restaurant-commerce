@@ -1,3 +1,5 @@
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useAuthContext } from "../../hooks/authentication"
 
 import {
@@ -12,11 +14,32 @@ import Button from "../Button"
 import IngredientContainer from "../IngredientContainer"
 
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg"
-import { useEffect } from "react"
 import { api } from "../../services/api"
+
+import { adjustDishPrice } from "../../common/functions"
+import { useCartContext } from "../../hooks/cart"
 
 const DishDetails = ({ dish }) => {
   const { userData, isAdmin } = useAuthContext()
+  const { cartDispatch } = useCartContext()
+
+  const [count, setCount] = useState("01")
+  const navigate = useNavigate()
+
+  const dishPrice = adjustDishPrice(dish.dish_price)
+
+  const handleGoToUpdate = () => {
+    navigate(`/update_dish/${dish.id_dish}`)
+  }
+
+  const handleAddToCart = () => {
+    const purchase = {
+      id_dish: dish.id_dish,
+      price: dish.dish_price,
+      quantity: Number(count),
+    }
+    cartDispatch({ type: "ADD", data: purchase })
+  }
 
   return (
     <Container>
@@ -42,18 +65,18 @@ const DishDetails = ({ dish }) => {
 
         {isAdmin ? (
           <ButtonsContainer>
-            <Button>
+            <Button onClick={handleGoToUpdate}>
               <span>Editar prato</span>
             </Button>
           </ButtonsContainer>
         ) : (
           <ButtonsContainer>
             <div>
-              <DishAdder size={"medium"} />
+              <DishAdder size={"medium"} count={count} setCount={setCount} />
             </div>
-            <Button>
+            <Button onClick={handleAddToCart}>
               <Receipt />
-              <span>pedir ∙ R$ 25,00</span>
+              <span>pedir ∙ R$ {dishPrice}</span>
             </Button>
           </ButtonsContainer>
         )}

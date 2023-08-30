@@ -39,7 +39,17 @@ class PrismaEngine {
     return records
   }
 
-  delte = async (tbName, where = {}) => {
+  update = async (tbName, where = {}, data) => {
+    if (Object.keys(where).length === 0) {
+      console.log("Update must have where condition!")
+      return
+    }
+    const updatedRecord = await this.client[tbName].update({ where, data })
+
+    return updatedRecord
+  }
+
+  delete = async (tbName, where = {}) => {
     if (Object.keys(where).length === 0) {
       console.log("Delete must have where condition!")
       return

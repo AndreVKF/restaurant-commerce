@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuthContext } from "../../hooks/authentication"
+import { useCartContext } from "../../hooks/cart"
 
 import {
   HeaderMobile,
@@ -19,9 +21,12 @@ import Receipt from "../../assets/icons/Receipt.svg"
 import Input from "../Input"
 import Button from "../Button"
 
-const Header = () => {
+const Header = ({ filterText, setFilterText }) => {
   const navigate = useNavigate()
   const { userData, logout, isAdmin } = useAuthContext()
+  const { cartState } = useCartContext()
+
+  const [cartQuantity, setCartQuantity] = useState(0)
 
   const handleGoToNewDish = () => {
     navigate("/create_dish")
@@ -31,6 +36,16 @@ const Header = () => {
     logout()
     navigate("/")
   }
+
+  useEffect(() => {
+    let quantity = 0
+
+    cartState.forEach((item) => {
+      quantity += item.quantity
+    })
+
+    setCartQuantity(quantity)
+  }, [cartState])
 
   return (
     <>
@@ -51,7 +66,7 @@ const Header = () => {
 
         <ReceiptBanner>
           <img src={Receipt} alt="Icone de recibo" />
-          <span>0</span>
+          <span>{cartQuantity}</span>
         </ReceiptBanner>
       </HeaderMobile>
 
@@ -70,6 +85,8 @@ const Header = () => {
             type="text"
             icon={FiSearch}
             placeholder="Busque por pratos ou ingredientes"
+            onChange={(e) => setFilterText(e.target.value)}
+            value={filterText}
           />
         </InputBanner>
         {isAdmin ? (
@@ -79,7 +96,7 @@ const Header = () => {
         ) : (
           <Button>
             <PiReceipt />
-            <span>Pedidos (0)</span>
+            <span>Pedidos ({cartQuantity})</span>
           </Button>
         )}
 

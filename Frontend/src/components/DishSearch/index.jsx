@@ -1,14 +1,21 @@
 import { Container } from "./styles"
 
-const DishSearch = () => {
+import { api } from "../../services/api"
+import { adjustDishPrice, titleizeText } from "../../common/functions"
+
+const DishSearch = ({ dish }) => {
   return (
     <Container>
       <img
-        src="/images/default_dish.png"
+        src={
+          dish.dish_image_url
+            ? `${api.defaults.baseURL}/files/${dish.dish_image_url}`
+            : "/images/default_dish.png"
+        }
         alt="Imagem de uma receita deliciosa"
       />
-      <h3>Salada Ravanella</h3>
-      <span>R$ 49,97</span>
+      <h3>{titleizeText(dish.dish_name)}</h3>
+      <span>R$ {adjustDishPrice(dish.dish_price)}</span>
     </Container>
   )
 }

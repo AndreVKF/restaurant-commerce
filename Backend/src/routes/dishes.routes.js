@@ -21,6 +21,12 @@ class DishesRouter {
       upload.single("dish_image"),
       this.dishesController.create
     )
+    this.router.post(
+      "/update/:id_dish",
+      upload.single("dish_image"),
+      this.dishesController.update
+    )
+    this.router.delete("/:id_dish", this.dishesController.delete)
   }
 }
 

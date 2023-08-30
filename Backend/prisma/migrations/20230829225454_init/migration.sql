@@ -36,6 +36,7 @@ CREATE TABLE "Purchase_Items" (
     "id_purchase_item" TEXT NOT NULL PRIMARY KEY,
     "id_purchase" INTEGER NOT NULL,
     "id_dish" INTEGER NOT NULL,
+    "price" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     CONSTRAINT "Purchase_Items_id_purchase_fkey" FOREIGN KEY ("id_purchase") REFERENCES "Purchases" ("id_purchase") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Purchase_Items_id_dish_fkey" FOREIGN KEY ("id_dish") REFERENCES "Dishes" ("id_dish") ON DELETE RESTRICT ON UPDATE CASCADE

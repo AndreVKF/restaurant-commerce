@@ -39,9 +39,9 @@ const DishSlider = ({ category, dishesArray }) => {
         <Swiper
           // install Swiper modules
           modules={[Navigation, EffectFade, A11y]}
-          spaceBetween={120}
+          spaceBetween={2}
           slidesPerView={numberSlides}
-          loop={true}
+          loop
           navigation
           // onSwiper={(swiper) => console.log(swiper)}
           // onSlideChange={() => console.log("slide change")}

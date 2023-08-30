@@ -9,6 +9,7 @@ import { Toast } from "./services/toast"
 import "react-toastify/dist/ReactToastify.css"
 
 import { AuthProvider } from "./hooks/authentication"
+import { CartProvider } from "./hooks/cart"
 import Routes from "./routes"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -16,8 +17,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <AuthProvider>
-        <Routes />
-        <Toast />
+        <CartProvider>
+          <Routes />
+          <Toast />
+        </CartProvider>
       </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
