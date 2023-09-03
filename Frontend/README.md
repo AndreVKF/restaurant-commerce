@@ -1,8 +1,28 @@
-# React + Vite
+# Food-Explorer Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Food-Explorer restaurant web browser application for customers to order healthy and taste dishes.
 
-Currently, two official plugins are available:
+## Access Link
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://restaurant-commerce.netlify.app/
+
+## Funcionalidades
+
+- SignIn, SignUp and session storage
+- Desktop and mobile responsiveness
+- Session maintenance with JWT and LocalStorage
+- Two different access types:
+- Admin:
+  - CRUD dishes
+  - Search by dish name and ingredient
+- User
+  - Store and order dishes on purchase cart
+  - Favorite tag dishes
+  - Search by dish name and ingredient
+  - Two payment options (PIX/Credit Card)
+
+## Stacks
+
+**Front-end:** Javascript, Vite, React, Axios, Styled-Components, Toastify, React-Router
+
+**Deploy:** Netlify
