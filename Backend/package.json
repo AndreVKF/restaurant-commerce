@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma-migrate": "npx prisma-multischema && npx prisma migrate dev --name ${NAME} && npx prisma db seed",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "start": "pm2-runtime start ecosystem.config.js --env production"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -28,6 +29,7 @@
     "express-formidable": "^1.2.0",
     "jsonwebtoken": "^9.0.1",
     "multer": "^1.4.5-lts.1",
+    "pm2": "^5.3.0",
     "prisma-multischema": "^1.1.3"
   }
 }
