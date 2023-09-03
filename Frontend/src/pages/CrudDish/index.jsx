@@ -1,3 +1,4 @@
+import { useAuthContext } from "../../hooks/authentication"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { useNavigate, useParams, useResolvedPath } from "react-router-dom"
@@ -30,6 +31,7 @@ import { api } from "../../services/api"
 const CrudDish = () => {
   const { id_dish } = useParams()
   const { pathname } = useResolvedPath()
+  const { isAdmin } = useAuthContext()
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true)
@@ -200,6 +202,11 @@ const CrudDish = () => {
   }
 
   useEffect(() => {
+    if (pathname.includes("update_dish") && !isAdmin) {
+      navigate("/dish_not_found")
+      return
+    }
+
     const fetchCategoriesData = async () => {
       const resp = await api.get(ROUTES.DISHES_CATEGORIES)
 
@@ -240,6 +247,7 @@ const CrudDish = () => {
 
     if (!id_dish) {
       navigate("/dish_not_found")
+      return
     }
 
     // get dish data

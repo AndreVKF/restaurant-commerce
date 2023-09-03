@@ -1,0 +1,11 @@
+model Favorites {
+    id_favorite Int @id @default(autoincrement())
+    id_dish Int
+    id_user Int
+
+    // relations
+    dish Dishes @relation(fields: [id_dish], references: [id_dish])
+    user Users @relation(fields: [id_user], references: [id_user])
+
+    @@unique([id_dish, id_user])
+}

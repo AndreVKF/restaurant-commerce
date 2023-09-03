@@ -191,3 +191,8 @@ export const screen_reader_only = css`
   border: 0;
   appearance: none;
 `
+
+export const desktop_main_container_padding = css`
+  padding-left: calc(8rem + 2vw);
+  padding-right: calc(8rem + 2vw);
+`

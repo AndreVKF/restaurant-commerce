@@ -17,32 +17,43 @@ import Loading from "../../components/Loading"
 import { api } from "../../services/api"
 import { groupDishByCategory } from "../../common/functions"
 import { ROUTES } from "../../common/constants"
+import { useAuthContext } from "../../hooks/authentication"
 
 const Home = () => {
+  const { userData } = useAuthContext()
   const [isLoading, setIsLoading] = useState(true)
   const [filterText, setFilterText] = useState("")
 
+  const [dishesArray, setDishesArray] = useState([])
   const [groupedDishesObj, setGroupedDishesObj] = useState({})
+  const [filterFavorites, setFilterFavorites] = useState(false)
   const [filteredGroupedDishesObj, setFilteredGroupedDishesObj] = useState({})
+  const [userFavoriteDishes, setUserFavoriteDishes] = useState([])
 
   useEffect(() => {
     setIsLoading(true)
 
-    api
-      .get(ROUTES.DISHES_DETAILS)
-      .then((resp) => {
-        if (resp.data) {
-          const groupedDishes = groupDishByCategory(resp.data)
-          setGroupedDishesObj(groupedDishes)
-        }
+    const fetchDishes = async () => {
+      const resp = await api.get(ROUTES.DISHES_DETAILS)
+
+      const dishesArray = resp.data
+      setDishesArray(dishesArray)
+    }
+
+    const fetchFavorites = async () => {
+      const resp = await api.get(`${ROUTES.FAVORITES}/${userData.id_user}`)
+
+      const userFavoritesDishes = resp.data
+      const userFavoritesArray = userFavoritesDishes.map((favorite) => {
+        return favorite.id_dish
       })
-      .catch((err) => {
-        if (err.response) {
-          toast.error(err.response.data.message)
-        } else {
-          toast.error("Erro interno do servidor!!")
-        }
-      })
+      setUserFavoriteDishes(userFavoritesArray)
+    }
+
+    const promisesArray = [fetchDishes(), fetchFavorites()]
+
+    Promise.all(promisesArray)
+      .catch(() => toast.error("Erro ao buscar dados!!"))
       .finally(() => {
         setIsLoading(false)
       })
@@ -51,8 +62,38 @@ const Home = () => {
   useEffect(() => {
     if (isLoading) return
 
-    if (filterText === "") {
+    // add favorite tag
+    const dishesArrayWithFavorite = dishesArray.map((dish) => {
+      return {
+        ...dish,
+        isFavorite: userFavoriteDishes.includes(dish.id_dish),
+      }
+    })
+
+    const groupedDishes = groupDishByCategory(dishesArrayWithFavorite)
+    setGroupedDishesObj(groupedDishes)
+  }, [isLoading])
+
+  useEffect(() => {
+    if (isLoading) return
+
+    if (filterText === "" && !filterFavorites) {
       setFilteredGroupedDishesObj(groupedDishesObj)
+      return
+    }
+
+    if (filterFavorites) {
+      let filteredDishes = []
+
+      Object.keys(groupedDishesObj).forEach((category) => {
+        groupedDishesObj[category].forEach((dish) => {
+          if (dish.isFavorite) {
+            filteredDishes.push(dish)
+          }
+        })
+      })
+      const filteredGroupedDishes = groupDishByCategory(filteredDishes)
+      setFilteredGroupedDishesObj(filteredGroupedDishes)
       return
     }
 
@@ -61,6 +102,10 @@ const Home = () => {
 
     Object.keys(groupedDishesObj).forEach((category) => {
       groupedDishesObj[category].forEach((dish) => {
+        if (filterFavorites) {
+          if (!dish.isFavorite) return
+        }
+
         let dishName = dish.dish_name.toLowerCase()
         let ingredientsArray = dish.ingredients
           .split(",")
@@ -81,7 +126,7 @@ const Home = () => {
     })
     const filteredGroupedDishes = groupDishByCategory(filteredDishes)
     setFilteredGroupedDishesObj(filteredGroupedDishes)
-  }, [isLoading, filterText, groupedDishesObj])
+  }, [isLoading, filterText, filterFavorites, groupedDishesObj])
 
   return isLoading ? (
     <Container>
@@ -89,7 +134,12 @@ const Home = () => {
     </Container>
   ) : (
     <Container>
-      <Header filterText={filterText} setFilterText={setFilterText} />
+      <Header
+        filterText={filterText}
+        setFilterText={setFilterText}
+        filterFavorites={filterFavorites}
+        setFilterFavorites={setFilterFavorites}
+      />
       <MainContainer>
         <BannerContainer>
           <HomeBanner />

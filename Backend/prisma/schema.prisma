@@ -1,4 +1,4 @@
-//🧩Don't Edit this file.✨Generated in Tue Aug 29 2023 19:57:41 GMT-0300 (Brasilia Standard Time)✨
+//🧩Don't Edit this file.✨Generated in Thu Aug 31 2023 17:25:46 GMT-0300 (Brasilia Standard Time)✨
 
 generator client {
   provider = "prisma-client-js"
@@ -6,7 +6,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 model Dish_Categories {
@@ -40,10 +40,23 @@ model Dishes {
   // relations
   dish_category  Dish_Categories  @relation(fields: [id_dish_category], references: [id_dish_category], onDelete: Cascade)
   Dish_Receipe   Dish_Receipe[]
+  Favorites      Favorites[]
   Purchase_Items Purchase_Items[]
 
   // constrains
   @@unique([id_dish, id_dish_category])
+}
+
+model Favorites {
+  id_favorite Int @id @default(autoincrement())
+  id_dish     Int
+  id_user     Int
+
+  // relations
+  dish Dishes @relation(fields: [id_dish], references: [id_dish])
+  user Users  @relation(fields: [id_user], references: [id_user])
+
+  @@unique([id_dish, id_user])
 }
 
 model Ingredients {
@@ -120,5 +133,6 @@ model Users {
   id_user_type Int
   created_at   DateTime    @default(now())
   updated_at   DateTime    @default(now()) @updatedAt
+  Favorites    Favorites[]
   Purchases    Purchases[]
 }

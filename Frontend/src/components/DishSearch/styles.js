@@ -4,14 +4,21 @@ import { poppins_200_medium, roboto_small_regular } from "../../styles/utils"
 
 export const Container = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.4rem 0.2rem;
 
+  border-bottom: 1px solid ${({ theme }) => theme.COLORS.DARK_1000};
+`
+export const DishContainer = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
   gap: 1.8rem;
 
-  padding: 1.4rem 0.2rem 1.4rem 0;
-  border-bottom: 1px solid ${({ theme }) => theme.COLORS.DARK_1000};
+  margin-right: 0.8rem;
+
+  cursor: pointer;
 
   > img {
     width: 4.8rem;
@@ -25,6 +32,14 @@ export const Container = styled.div`
 
   > span {
     ${roboto_small_regular}
-    color: ${({ theme }) => theme.COLORS.CAKE_100}
+    color: ${({ theme }) => theme.COLORS.CAKE_100};
+
+    white-space: nowrap;
   }
+`
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
 `

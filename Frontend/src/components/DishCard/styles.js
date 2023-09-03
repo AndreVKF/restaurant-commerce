@@ -77,8 +77,54 @@ export const MarkersContainer = styled.div`
   height: 2.4rem;
   width: 2.4rem;
 
-  > svg {
-    cursor: pointer;
+  > div {
+    svg {
+      cursor: pointer;
+
+      & path {
+        fill: transparent;
+        stroke: ${(props) =>
+          props.$isFavoriteDish
+            ? props.theme.COLORS.TOMATO_100
+            : props.theme.COLORS.LIGHT_100};
+        fill: ${(props) =>
+          props.$isFavoriteDish
+            ? props.theme.COLORS.TOMATO_100
+            : "transparent"};
+
+        stroke-width: 20;
+
+        stroke-dasharray: 800;
+        stroke-dashoffset: 0;
+      }
+
+      path {
+        animation: ${(props) =>
+          props.$isFavoriteDish ? "animate-heart 1s linear forwards" : ""};
+      }
+
+      @keyframes animate-heart {
+        0% {
+          stroke-dashoffset: 0;
+        }
+
+        40% {
+          stroke-dashoffset: 800;
+          fill: transparent;
+        }
+
+        100% {
+          stroke-dashoffset: 1600;
+          fill: transparent;
+        }
+
+        100% {
+          stroke-dashoffset: 1600;
+          stroke: ${({ theme }) => theme.COLORS.TOMATO_100};
+          fill: ${({ theme }) => theme.COLORS.TOMATO_100};
+        }
+      }
+    }
   }
 `
 

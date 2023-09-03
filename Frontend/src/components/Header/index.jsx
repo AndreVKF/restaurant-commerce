@@ -9,6 +9,7 @@ import {
   ReceiptBanner,
   HeaderDesktop,
   InputBanner,
+  OptionsBanner,
 } from "./styles"
 
 import { FiSearch, FiUpload } from "react-icons/fi"
@@ -21,7 +22,12 @@ import Receipt from "../../assets/icons/Receipt.svg"
 import Input from "../Input"
 import Button from "../Button"
 
-const Header = ({ filterText, setFilterText }) => {
+const Header = ({
+  filterText,
+  setFilterText,
+  filterFavorites,
+  setFilterFavorites,
+}) => {
   const navigate = useNavigate()
   const { userData, logout, isAdmin } = useAuthContext()
   const { cartState } = useCartContext()
@@ -37,6 +43,10 @@ const Header = ({ filterText, setFilterText }) => {
     navigate("/")
   }
 
+  const handleGoToPayment = () => {
+    navigate("/cart")
+  }
+
   useEffect(() => {
     let quantity = 0
 
@@ -50,7 +60,7 @@ const Header = ({ filterText, setFilterText }) => {
   return (
     <>
       <HeaderMobile>
-        <Link to="menu">
+        <Link to="/menu">
           <img src={Menu} alt="Ir para o menu" />
         </Link>
 
@@ -64,10 +74,12 @@ const Header = ({ filterText, setFilterText }) => {
           </LogoBanner>
         </Link>
 
-        <ReceiptBanner>
-          <img src={Receipt} alt="Icone de recibo" />
-          <span>{cartQuantity}</span>
-        </ReceiptBanner>
+        {!isAdmin && (
+          <ReceiptBanner onClick={handleGoToPayment}>
+            <img src={Receipt} alt="Icone de recibo" />
+            <span>{cartQuantity}</span>
+          </ReceiptBanner>
+        )}
       </HeaderMobile>
 
       <HeaderDesktop>
@@ -89,12 +101,19 @@ const Header = ({ filterText, setFilterText }) => {
             value={filterText}
           />
         </InputBanner>
+
+        <OptionsBanner $filterFavorites={filterFavorites}>
+          <span onClick={() => setFilterFavorites(!filterFavorites)}>
+            Meus favoritos
+          </span>
+        </OptionsBanner>
+
         {isAdmin ? (
           <Button onClick={handleGoToNewDish}>
             <span>Novo prato</span>
           </Button>
         ) : (
-          <Button>
+          <Button onClick={handleGoToPayment}>
             <PiReceipt />
             <span>Pedidos ({cartQuantity})</span>
           </Button>

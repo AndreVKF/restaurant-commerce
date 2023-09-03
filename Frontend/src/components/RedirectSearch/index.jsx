@@ -1,8 +1,8 @@
 import { Container } from "./styles"
 
-const RedirectSearch = ({ text }) => {
+const RedirectSearch = ({ text, onClick, ...rest }) => {
   return (
-    <Container>
+    <Container onClick={onClick} {...rest}>
       <span>{text}</span>
     </Container>
   )

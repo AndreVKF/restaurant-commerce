@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-import { devices } from "../../styles/utils"
+import { desktop_main_container_padding, devices } from "../../styles/utils"
 
 export const Container = styled.div`
   display: flex;
@@ -36,8 +36,7 @@ export const DishesContainer = styled.div`
   padding-right: calc(2rem + 2vw);
 
   @media screen and ${devices.desktop} {
-    padding-left: calc(4rem + 2vw);
-    padding-right: calc(10rem + 2vw);
+    ${desktop_main_container_padding}
     gap: 4.8rem;
   }
 `

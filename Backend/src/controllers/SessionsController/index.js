@@ -31,6 +31,7 @@ class SessionsController {
     const token = sign({ userId: user.id_user }, secret, { expiresIn })
 
     const returnUserData = {
+      id_user: user.id_user,
       name: user.name,
       email: user.email,
       avatar_url: user.avatar_url,
@@ -64,6 +65,7 @@ class SessionsController {
       })
 
       const returnUserData = {
+        id_user: user.id_user,
         name: user.name,
         email: user.email,
         avatar_url: user.avatar_url,

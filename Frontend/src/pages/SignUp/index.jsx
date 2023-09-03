@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import { toast } from "react-toastify"
@@ -19,8 +19,11 @@ import Button from "../../components/Button"
 import { useAuthContext } from "../../hooks/authentication"
 import { ROUTES } from "../../common/constants"
 import { api } from "../../services/api"
+import { useCartContext } from "../../hooks/cart"
 
 const SignUp = () => {
+  const { handleEraseCart } = useCartContext()
+
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -54,6 +57,10 @@ const SignUp = () => {
         }
       })
   }
+
+  useEffect(() => {
+    handleEraseCart()
+  }, [])
 
   return (
     <Container>

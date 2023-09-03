@@ -34,7 +34,7 @@ class PrismaEngine {
   }
 
   getMany = async (tbName, where = {}) => {
-    const records = await this.client[tbName].findMany(where)
+    const records = await this.client[tbName].findMany({ where })
 
     return records
   }

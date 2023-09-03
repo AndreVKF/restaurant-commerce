@@ -21,5 +21,6 @@ export const Container = styled.button`
 
   svg {
     transform: scale(0.8);
+    min-width: 2.4rem;
   }
 `

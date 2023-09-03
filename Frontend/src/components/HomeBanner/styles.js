@@ -62,7 +62,7 @@ export const TextBanner = styled.div`
 
   h3 {
     ${poppins_200_medium}
-    font-size: 1.6rem;
+    font-size: 2rem;
     color: ${({ theme }) => theme.COLORS.LIGHT_300};
   }
 
@@ -77,7 +77,7 @@ export const TextBanner = styled.div`
 
   @media only screen and ${devices.sx} {
     h3 {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
     }
 
     p {

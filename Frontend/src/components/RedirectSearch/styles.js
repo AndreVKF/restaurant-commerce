@@ -15,6 +15,9 @@ export const Container = styled.div`
 
   > span {
     ${poppins_200_medium}
-    color: ${({ theme }) => theme.COLORS.LIGHT_300};
+    color: ${(props) =>
+      props.$color ? props.$color : props.theme.COLORS.LIGHT_300};
   }
+
+  cursor: pointer;
 `

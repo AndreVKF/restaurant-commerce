@@ -5,6 +5,7 @@ import { ROUTES } from "../common/constants"
 
 import { toast } from "react-toastify"
 import { storeInfo, deleteInfo, retrieveInfo } from "../services/localstorage"
+import { useCartContext } from "./cart"
 
 const AuthContext = createContext({})
 
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }) => {
         const { token } = data
 
         const user = {
+          id_user: data.user.id_user,
           name: data.user.name,
           email: data.user.email,
           avatar_url: data.user.avatar_url,
@@ -67,6 +69,7 @@ export const AuthProvider = ({ children }) => {
         const { data } = resp
 
         const user = {
+          id_user: data.id_user,
           name: data.name,
           email: data.email,
           avatar_url: data.avatar_url,

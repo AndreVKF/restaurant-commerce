@@ -8,4 +8,5 @@ export const ROUTES = {
   DISH: "/dish",
   CREATE_DISH: "/dish/create",
   UPDATE_DISH: "/dish/update",
+  FAVORITES: "/user_favorites",
 }

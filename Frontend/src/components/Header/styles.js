@@ -2,7 +2,9 @@ import styled from "styled-components"
 
 import {
   roboto_smallest_regular,
+  roboto_small_regular,
   roboto_bigger_bold,
+  desktop_main_container_padding,
   devices,
 } from "../../styles/utils"
 
@@ -71,6 +73,7 @@ export const ReceiptBanner = styled.div`
 
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   > span {
     width: 2rem;
@@ -101,10 +104,11 @@ export const HeaderDesktop = styled.header`
 
     background-color: ${({ theme }) => theme.COLORS.DARK_700};
 
-    padding: 2.8rem 12.3rem;
+    padding: 2.8rem 0;
+    ${desktop_main_container_padding}
 
     > button {
-      min-width: 10rem;
+      min-width: 8rem;
       max-width: 21.6rem;
     }
 
@@ -114,6 +118,23 @@ export const HeaderDesktop = styled.header`
         cursor: pointer;
       }
     }
+  }
+`
+
+export const OptionsBanner = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+
+  cursor: pointer;
+
+  span {
+    ${roboto_small_regular}
+    color: ${(props) =>
+      props.$filterFavorites
+        ? props.theme.COLORS.TOMATO_400
+        : props.theme.COLORS.LIGHT_300};
+    white-space: nowrap;
   }
 `
 

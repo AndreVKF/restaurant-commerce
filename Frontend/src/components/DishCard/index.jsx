@@ -10,21 +10,22 @@ import {
   MarkersContainer,
 } from "./styles"
 
-import { ReactComponent as Heart } from "../../assets/icons/Heart.svg"
 import { ReactComponent as Pencil } from "../../assets/icons/Pencil.svg"
 
 import Button from "../Button"
 import DishAdder from "../DishAdder"
 
 import { titleizeText, adjustDishPrice } from "../../common/functions"
+import { ROUTES } from "../../common/constants"
 import { api } from "../../services/api"
 
 const DishCard = ({ dish }) => {
-  const { isAdmin } = useAuthContext()
-  const { cartDispatch } = useCartContext()
+  const { isAdmin, userData } = useAuthContext()
+  const { handleAddToCart } = useCartContext()
   const navigate = useNavigate()
 
   const [count, setCount] = useState("01")
+  const [isFavoriteDish, setIsFavoriteDish] = useState(dish.isFavorite)
 
   const handleGoToDish = (id_dish) => {
     navigate(`/dish/${id_dish}`)
@@ -34,22 +35,42 @@ const DishCard = ({ dish }) => {
     navigate(`/update_dish/${id_dish}`)
   }
 
-  const handleAddToCart = () => {
-    const purchase = {
-      id_dish: dish.id_dish,
-      price: dish.dish_price,
-      quantity: Number(count),
+  const handleFavoriteClick = async ({ id_user, id_dish }) => {
+    let isFavorite = !isFavoriteDish
+
+    if (isFavorite) {
+      await api.post(`${ROUTES.FAVORITES}`, { id_user, id_dish })
+    } else {
+      await api.delete(`${ROUTES.FAVORITES}`, { data: { id_user, id_dish } })
     }
-    cartDispatch({ type: "ADD", data: purchase })
+
+    dish.isFavorite = isFavorite
+
+    setIsFavoriteDish(isFavorite)
   }
 
   return (
     <Container>
-      <MarkersContainer>
+      <MarkersContainer $isFavoriteDish={isFavoriteDish}>
         {isAdmin ? (
           <Pencil onClick={() => handleGoToUpdateDish(dish.id_dish)} />
         ) : (
-          <Heart />
+          <div
+            onClick={async () =>
+              await handleFavoriteClick({
+                id_dish: dish.id_dish,
+                id_user: userData.id_user,
+              })
+            }
+          >
+            <svg height="24" width="26" viewBox="0 0 230 230">
+              <path
+                d="M213.588,120.982L115,213.445l-98.588-92.463C-6.537,96.466-5.26,57.99,19.248,35.047l2.227-2.083
+              c24.51-22.942,62.984-21.674,85.934,2.842L115,43.709l7.592-7.903c22.949-24.516,61.424-25.784,85.936-2.842l2.227,2.083
+              C235.26,57.99,236.537,96.466,213.588,120.982z"
+              />
+            </svg>
+          </div>
         )}
       </MarkersContainer>
 
@@ -75,7 +96,7 @@ const DishCard = ({ dish }) => {
           <div>
             <DishAdder count={count} setCount={setCount} />
           </div>
-          <Button onClick={handleAddToCart}>
+          <Button onClick={() => handleAddToCart({ dish, quantity: count })}>
             <span>Incluir</span>
           </Button>
         </ButtonContainer>

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { useAuthContext } from "../../hooks/authentication"
 
@@ -16,9 +16,12 @@ import PasswordInput from "../../components/PasswordInput"
 import Button from "../../components/Button"
 
 import { toast } from "react-toastify"
+import { useCartContext } from "../../hooks/cart"
 
 const SignIn = () => {
   const { login } = useAuthContext()
+  const { handleEraseCart } = useCartContext()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -32,6 +35,10 @@ const SignIn = () => {
 
     login({ email, password })
   }
+
+  useEffect(() => {
+    handleEraseCart()
+  }, [])
 
   return (
     <Container>

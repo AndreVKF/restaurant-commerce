@@ -21,7 +21,7 @@ import { useCartContext } from "../../hooks/cart"
 
 const DishDetails = ({ dish }) => {
   const { userData, isAdmin } = useAuthContext()
-  const { cartDispatch } = useCartContext()
+  const { handleAddToCart } = useCartContext()
 
   const [count, setCount] = useState("01")
   const navigate = useNavigate()
@@ -30,15 +30,6 @@ const DishDetails = ({ dish }) => {
 
   const handleGoToUpdate = () => {
     navigate(`/update_dish/${dish.id_dish}`)
-  }
-
-  const handleAddToCart = () => {
-    const purchase = {
-      id_dish: dish.id_dish,
-      price: dish.dish_price,
-      quantity: Number(count),
-    }
-    cartDispatch({ type: "ADD", data: purchase })
   }
 
   return (
@@ -74,7 +65,7 @@ const DishDetails = ({ dish }) => {
             <div>
               <DishAdder size={"medium"} count={count} setCount={setCount} />
             </div>
-            <Button onClick={handleAddToCart}>
+            <Button onClick={() => handleAddToCart({ dish, quantity: count })}>
               <Receipt />
               <span>pedir ∙ R$ {dishPrice}</span>
             </Button>
