@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false)
 
   const login = ({ email, password }) => {
+    console.log(import.meta.env.BACKEND_URL, api)
     api
       .post(ROUTES.LOGIN, { email, password })
       .then((resp) => {
