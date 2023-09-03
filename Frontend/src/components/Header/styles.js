@@ -108,7 +108,7 @@ export const HeaderDesktop = styled.header`
     ${desktop_main_container_padding}
 
     > button {
-      min-width: 8rem;
+      min-width: 12rem;
       max-width: 21.6rem;
     }
 

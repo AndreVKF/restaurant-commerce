@@ -24,6 +24,7 @@ export const Container = styled.div`
 
 export const SwiperContainer = styled.div`
   width: 100%;
+
   margin-top: 2.4rem;
 
   .swiper-button-prev {

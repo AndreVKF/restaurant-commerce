@@ -26,8 +26,10 @@ const DishSlider = ({ category, dishesArray }) => {
       setNumberSlides(4)
     } else if (width >= 1400) {
       setNumberSlides(3)
+    } else if (width <= 480) {
+      setNumberSlides(1.5)
     } else {
-      setNumberSlides(2)
+      setNumberSlides(2.4)
     }
   }, [width])
 
@@ -41,6 +43,8 @@ const DishSlider = ({ category, dishesArray }) => {
           modules={[Navigation, EffectFade, A11y]}
           spaceBetween={2}
           slidesPerView={numberSlides}
+          centeredSlides={true}
+          centeredSlidesBounds={true}
           loop
           navigation
           // onSwiper={(swiper) => console.log(swiper)}
